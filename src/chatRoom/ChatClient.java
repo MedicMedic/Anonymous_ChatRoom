@@ -12,12 +12,8 @@ public class ChatClient implements Runnable{
     public ChatClient() {
     }
 
-    public void run(){
-        System.out.println("233");
-        startClient();
-        System.out.println("233");
-    }
-    public void startClient() {
+    // thread start
+    public void run() {
         Socket socket = null;
         Scanner keyboardInput = new Scanner(System.in);
         try {
@@ -55,13 +51,9 @@ public class ChatClient implements Runnable{
     }
 
     public static void main(String[] args) {
-        ChatClient client1 = new ChatClient();
-        ChatClient client2 = new ChatClient();
-        ChatClient client3 = new ChatClient();
-        ChatClient client4 = new ChatClient();
-        Thread thread1 = new Thread(client1);
-        Thread thread2 = new Thread(client2);
-        thread1.start();
-        thread2.start();
+
+        new Thread(new ChatClient()).start();
+        new Thread(new ChatClient()).start();
+
     }
 }
