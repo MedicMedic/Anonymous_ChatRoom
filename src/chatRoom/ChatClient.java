@@ -25,19 +25,29 @@ public class ChatClient implements Runnable{
             System.exit(-1);
         }
 
-        PrintWriter pw;
-        BufferedReader br;
+//        PrintWriter pw;
+//        BufferedReader br;
+        ObjectOutputStream oos;
+        ObjectInputStream ois;
         try {
-            pw = new PrintWriter(socket.getOutputStream(), true);
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            System.out.println("test");
+//            pw = new PrintWriter(socket.getOutputStream(), true);
+//            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            oos = new ObjectOutputStream(socket.getOutputStream());
+            ois = new ObjectInputStream(socket.getInputStream());
+
 
             // TODO: show on gui
             // initialize your Nickname
             System.out.println("Welcome to anonymous charRoom, Please enter you Nickname");
             String nickName = keyboardInput.nextLine();
-            pw.println(nickName);
+//            pw.println(nickName);
+            oos.writeObject(nickName);
+
             String serverResponse;
-            serverResponse= br.readLine();
+//            serverResponse= br.readLine();
+            serverResponse = (String)ois.readObject();
             System.out.println("##########Server sent me:" + serverResponse);
 
 
@@ -47,28 +57,33 @@ public class ChatClient implements Runnable{
 
                 String newUserInput = keyboardInput.nextLine();
                 System.out.println("keyboard message:" + newUserInput);
-                pw.println(newUserInput);
+//                pw.println(newUserInput);
+                oos.writeObject(newUserInput);
                 if (newUserInput.startsWith("terminate")) {
                     break;
                 }
                 System.out.println("waiting for server message");
-                serverResponse = br.readLine();
-                if(serverResponse.startsWith(nickName)){
-                    cut the head, and save the message
-                }
-                else if(serverResponse.startsWith("Online")){
-                    // add k to userList
-                }
-                else if(serverResponse.startsWith("offline")){
-                    find the k to delete
-                }
+//                serverResponse = br.readLine();
+                serverResponse =  (String)ois.readObject();
+//                if(serverResponse.startsWith(nickName)){
+//                    cut the head, and save the message
+//                }
+//                else if(serverResponse.startsWith("Online")){
+//                    // add k to userList
+//                }
+//                else if(serverResponse.startsWith("offline")){
+//                    find the k to delete
+//                }
                 System.out.println("#########Server sent me:" + serverResponse);
             } while (true);
-            pw.close();
-            br.close();
+            oos.flush();
+            oos.close();
+            ois.close();
+//            pw.close();
+//            br.close();
             socket.close();
             keyboardInput.close();
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             System.err.println("Client error with game: " + e);
         }
     }

@@ -24,49 +24,55 @@ public class ChatTransaction implements Runnable{
         try {
             ois = new ObjectInputStream(socket.getInputStream() );
             oos = new ObjectOutputStream(socket.getOutputStream());
-            pw = new PrintWriter(socket.getOutputStream(), true);
-            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//            pw = new PrintWriter(socket.getOutputStream(), true);
+//            br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             // DONE: send the list of users to the client
-            String clientNameRequest = br.readLine();
-            String ClientNameRequest = (String)ois.readObject();
+//            String clientNameRequest = br.readLine();
+            String clientNameRequest = (String)ois.readObject();
             nickName = clientNameRequest;
-            pw.println("Welcome "+ nickName);
+            oos.writeObject("Welcome "+ nickName);
             userList.put(nickName, new Stack<String>());
 
             do {
 
                 System.out.println("Waiting for client request");
-                String clientRequest = br.readLine();
-                System.out.println("New client message received:" + clientRequest);
+//                String clientRequest = br.readLine();
+                Object clientRequest = ois.readObject();
+                System.out.println("New client message received:" + (String)clientRequest);
                 String response;
 
 
-                if (clientRequest.startsWith("terminate")) {
+                if (((String)clientRequest).startsWith("terminate")) {
 
                     // TODO: remove client from the list
-                    pw.println("Client terminating, closing socket");
+//                    pw.println("Client terminating, closing socket");
+                    oos.writeObject("Client terminating, closing socket");
                     break;
-                }else if(clientRequest.startsWith(nickName)){
-                    pw.println(clientRequest);
-                    String message = cut;
-                    cut your own name, and send the rest message back
+                }
+//                else if(((String)(clientRequest)).startsWith(nickName)){
+//                    pw.println(clientRequest);
+//                    String message = cut;
+//                    cut your own name, and send the rest message back
                     //also do the refresh job, but how
                     //HashMap<String, Stack<String>> temp = userList;
                     //temp's key add the message
                     //send it back
                     //delete client's own key,
                     //client check new list, find that information
-                }else if (clientRequest.equals("UpdateList")){
-                    pw.
+//                }
+            else if (clientRequest.equals("UpdateList")){
+                    oos.writeObject(userList);
                 }
                 else {
-                    pw.println("Unexpected client message");
+//                    pw.println("Unexpected client message");
+                    oos.writeObject("Unexpected client message");
                 }
 
             } while (true);
-            pw.close();
-            br.close();
+            oos.flush();
+            oos.close();
+            ois.close();
             System.out.println("Closing connection with " + socket.getInetAddress());
             socket.close();
         } catch (IOException | ClassNotFoundException e) {
