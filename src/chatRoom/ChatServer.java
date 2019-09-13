@@ -15,7 +15,7 @@ public class ChatServer {
     // Avoid problems like deadlock, conflict or starvation
     private static int numReaders = 0;
 
-    private static HashMap<String, LinkedList<String>> userList = new HashMap<>();
+    private static HashMap<String, Stack<String>> userList = new HashMap<>();
     /*
       use the Singleton to ensure the server could be at most one
       and just be used in package

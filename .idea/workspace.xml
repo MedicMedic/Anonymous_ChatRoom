@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4e5752f-ba00-4830-8163-0d239716d052" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom/ChatTransaction.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Assignment_ChatRoom.vpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chatRoom/AvoidDeadlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chatRoom/ChatTransaction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom/ChatClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom/ChatServer$SingletonBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom/ChatServer$SingletonBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom/ChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom/ChatServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Assignment_ChatRoom.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assignment_ChatRoom.vpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom/ChatClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom/ChatServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom/ChatTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom/ChatTransaction.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,40 +23,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/chatRoom/ChatServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="213">
+              <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#465#466#0" expanded="true" />
-                <element signature="e#502#503#0" expanded="true" />
-                <element signature="e#1935#1936#0" expanded="true" />
-                <element signature="e#1975#1976#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chatRoom/ChatTransaction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-441">
-              <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
+            <state relative-caret-position="150">
+              <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chatRoom/AvoidDeadlock.java">
+        <entry file="file://$PROJECT_DIR$/src/chatRoom/ChatClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+            <state relative-caret-position="502">
+              <caret line="61" column="39" selection-start-line="61" selection-start-column="39" selection-end-line="61" selection-end-column="39" />
               <folding>
-                <element signature="e#195#196#0" expanded="true" />
-                <element signature="e#225#233#0" expanded="true" />
-                <element signature="e#261#262#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,6 +74,9 @@
       <find>socket</find>
       <find>run</find>
       <find>avoid</find>
+      <find>4</find>
+      <find>List</find>
+      <find>list</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -91,15 +85,14 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/chatRoom/ChatClient.java" />
+        <option value="$PROJECT_DIR$/src/chatRoom/AvoidDeadlock.java" />
         <option value="$PROJECT_DIR$/src/chatRoom/ChatServer.java" />
         <option value="$PROJECT_DIR$/src/chatRoom/ChatTransaction.java" />
-        <option value="$PROJECT_DIR$/src/chatRoom/AvoidDeadlock.java" />
+        <option value="$PROJECT_DIR$/src/chatRoom/ChatClient.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="720" />
+  <component name="ProjectFrameBounds">
     <option name="width" value="720" />
     <option name="height" value="900" />
   </component>
@@ -109,6 +102,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -131,8 +126,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -140,7 +133,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="com.maddyhome.idea.vim.ui.VimEmulationConfigurable" />
+    <property name="settings.editor.selected.configurable" value="cn.rieon.idea.plugin.AutoSwitchIm.ui.InputSourceConfigure" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -201,10 +194,20 @@
     </task>
     <servers />
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="720" height="900" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16881259" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.044247787" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -217,7 +220,7 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32920793" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="9" />
@@ -230,17 +233,38 @@
       <window_info anchor="right" id="Theme Preview" order="5" />
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" x="0" y="0" width="130" height="700" id="Documentation" order="8" side_tool="true" weight="0.32890856" />
+      <window_info anchor="right" x="0" y="0" width="130" height="700" id="Documentation" order="8" side_tool="true" weight="0.32832617" />
     </layout>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Assignment_ChatRoom.iml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/chatRoom/AvoidDeadlock.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
+          <folding>
+            <element signature="e#195#196#0" expanded="true" />
+            <element signature="e#261#262#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/chatRoom/ChatClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="41">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+        <state relative-caret-position="502">
+          <caret line="61" column="39" selection-start-line="61" selection-start-column="39" selection-end-line="61" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chatRoom/ChatTransaction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="42" column="34" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -249,34 +273,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chatRoom/ChatServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        <state relative-caret-position="213">
+          <caret line="45" column="42" selection-start-line="45" selection-start-column="42" selection-end-line="45" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#465#466#0" expanded="true" />
-            <element signature="e#502#503#0" expanded="true" />
-            <element signature="e#1935#1936#0" expanded="true" />
-            <element signature="e#1975#1976#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chatRoom/AvoidDeadlock.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="9" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-          <folding>
-            <element signature="e#195#196#0" expanded="true" />
-            <element signature="e#225#233#0" expanded="true" />
-            <element signature="e#261#262#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chatRoom/ChatTransaction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-441">
-          <caret line="2" column="10" selection-start-line="2" selection-start-column="10" selection-end-line="2" selection-end-column="10" />
         </state>
       </provider>
     </entry>

@@ -7,13 +7,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class ChatTransaction implements Runnable{
-    private String name;
+    private String nickName;
     private Socket socket;
-    private static HashMap<String, LinkedList<String>> userList = new HashMap<>();
+    private static HashMap<String, Stack<String>> userList;
 
-    public ChatTransaction(Socket socket, HashMap<String, LinkedList<String>> userList) {
+    public ChatTransaction(Socket socket, HashMap<String, Stack<String>> userList) {
         this.socket = socket;
         this.userList = userList;
     }
@@ -25,7 +26,11 @@ public class ChatTransaction implements Runnable{
             pw = new PrintWriter(socket.getOutputStream(), true);
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            // TODO: send the list of users to the client
+            // DONE: send the list of users to the client
+            String clientNameRequest = br.readLine();
+            nickName = clientNameRequest;
+            pw.println("Welcome "+ nickName);
+            userList.put(nickName, new Stack<String>());
 
             do {
 
@@ -34,17 +39,24 @@ public class ChatTransaction implements Runnable{
                 System.out.println("New client message received:" + clientRequest);
                 String response;
 
-                if (clientRequest.startsWith("Init")){
-                    pw.println("Happy Chatting");
-                    userList.put(clientRequest.substring(4), new LinkedList<String>());
-                    System.out.println(userList.keySet().iterator().next());
-                }
-                else if (clientRequest.startsWith("terminate")) {
+
+                if (clientRequest.startsWith("terminate")) {
 
                     // TODO: remove client from the list
                     pw.println("Client terminating, closing socket");
                     break;
-                } else {
+                }else if(clientRequest.startsWith(nickName)){
+                    pw.println(clientRequest);
+                    String message = cut;
+                    cut your own name, and send the rest message back
+                    //also do the refresh job, but how
+                    //HashMap<String, Stack<String>> temp = userList;
+                    //temp's key add the message
+                    //send it back
+                    //delete client's own key,
+                    //client check new list, find that information
+                }
+                else {
                     pw.println("Unexpected client message");
                 }
 
