@@ -1,9 +1,6 @@
 package chatRoom;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,14 +17,19 @@ public class ChatTransaction implements Runnable{
     }
 
     public void run() {
+        ObjectInputStream ois;
+        ObjectOutputStream oos;
         PrintWriter pw; // output stream to client
         BufferedReader br; // input stream from client
         try {
+            ois = new ObjectInputStream(socket.getInputStream() );
+            oos = new ObjectOutputStream(socket.getOutputStream());
             pw = new PrintWriter(socket.getOutputStream(), true);
             br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             // DONE: send the list of users to the client
             String clientNameRequest = br.readLine();
+            String ClientNameRequest = (String)ois.readObject();
             nickName = clientNameRequest;
             pw.println("Welcome "+ nickName);
             userList.put(nickName, new Stack<String>());
@@ -55,6 +57,8 @@ public class ChatTransaction implements Runnable{
                     //send it back
                     //delete client's own key,
                     //client check new list, find that information
+                }else if (clientRequest.equals("UpdateList")){
+                    pw.
                 }
                 else {
                     pw.println("Unexpected client message");
@@ -65,8 +69,8 @@ public class ChatTransaction implements Runnable{
             br.close();
             System.out.println("Closing connection with " + socket.getInetAddress());
             socket.close();
-        } catch (IOException e) {
-            System.err.println("Server error with game: " + e);
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Server error with: " + e);
         }
 
 
