@@ -66,6 +66,8 @@ public class ChatTransaction implements Runnable{
                 }
                 else if (clientRequest.equals("UpdateList")){
                     oos.writeObject(onlineList.get(nickName));
+                    // when the message is send, immediately delete the cache
+                    onlineList.values().clear();
                 }
                 else if( clientRequest.startsWith("Msg")){
                     StringTokenizer st = new StringTokenizer(clientRequest, " ");

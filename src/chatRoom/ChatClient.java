@@ -8,8 +8,7 @@ public class ChatClient implements Runnable{
     public static final String HOST_NAME = "localhost";
     public static final int HOST_PORT = 8888; // host port number
 
-
-    private HashMap<String, Stack<String>> messageMap;
+    private static HashMap<String, Stack<String>> onlineList;
     // non-parameter constructor
     public ChatClient() {
     }
@@ -47,8 +46,9 @@ public class ChatClient implements Runnable{
 
             // first load the online List
             serverResponse = ois.readObject();
-            messageMap = (HashMap)serverResponse;
+            onlineList = (HashMap)serverResponse;
 
+            HashMap<String, Stack<String>> temp;
 // TODO:update messageList per 5 second
 
             do {
@@ -65,17 +65,24 @@ public class ChatClient implements Runnable{
 
                     //Msg Medic Mao Message
 //                    oos.writeObject();
+                } else if (newUserInput.equals("UpdateList")) {
+                    // update the onlineList
+                    temp = (HashMap)ois.readObject();
+                    for(String sender : temp.keySet()){
+                        if(onlineList.containsKey(sender)){
+                            while(!temp.get(sender).isEmpty())
+                                onlineList.get(sender).push(temp.get(sender).pop());
+                            //:Todo: create a new receive panel
+                        }else{
+                            onlineList.put(sender, new Stack<>());
+                            while(!temp.get(sender).isEmpty())
+                                onlineList.get(sender).push(temp.get(sender).pop());
+                            //:Todo: create a new receive panel
+                        }
+                    }
+
                 }
 
-//                if(serverResponse.startsWith(nickName)){
-//                    cut the head, and save the message
-//                }
-//                else if(serverResponse.startsWith("Online")){
-//                    // add k to onlineList
-//                }
-//                else if(serverResponse.startsWith("offline")){
-//                    find the k to delete
-//                }
                 System.out.println("waiting for server message");
                 serverResponse =  (String)ois.readObject();
                 System.out.println("#########Server sent me:" + serverResponse);
