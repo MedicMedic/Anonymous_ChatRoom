@@ -15,7 +15,7 @@ public class ChatServer {
     // Avoid problems like deadlock, conflict or starvation
     private static int numReaders = 0;
 
-    private static HashMap<String, Stack<String>> userList = new HashMap<>();
+    private static HashMap<String, HashMap<String, Stack<String>>>  onlineList= new HashMap<>();
     /*
       use the Singleton to ensure the server could be at most one
       and just be used in package
@@ -51,7 +51,7 @@ public class ChatServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection made with " + socket.getInetAddress());
                 // TODO: add code to get name of the user
-                Thread thread = new Thread(new ChatTransaction(socket, userList));
+                Thread thread = new Thread(new ChatTransaction(socket, onlineList));
                 thread.start();
             }
             serverSocket.close();
