@@ -52,21 +52,18 @@ public class ChatClient implements Runnable{
 // TODO:update messageList per 5 second
 
             do {
-                System.out.println("waiting for" + nickName + "input");
+                System.out.println("waiting for =" + nickName + "= input");
 
                 String newUserInput = keyboardInput.nextLine();
                 System.out.println("keyboard message:" + newUserInput);
-                oos.writeObject(newUserInput);
+//                oos.writeObject(newUserInput);
 
 
                 if (newUserInput.startsWith("terminate")) {
                     break;
-                }else if(newUserInput.startsWith("Msg")){  //  send the message by temp Hash Map
+                }else if(newUserInput.equals("UpdateList")){
+                    oos.writeObject("UpdateList");
 
-                    //Msg Medic Mao Message
-//                    oos.writeObject();
-                } else if (newUserInput.equals("UpdateList")) {
-                    // update the onlineList
                     temp = (HashMap)ois.readObject();
                     for(String sender : temp.keySet()){
                         if(onlineList.containsKey(sender)){
@@ -80,12 +77,21 @@ public class ChatClient implements Runnable{
                             //:Todo: create a new receive panel
                         }
                     }
+                    for(String s : onlineList.keySet())
+                        System.out.println(s);
 
+                }else if(newUserInput.startsWith("Msg")){
+                    oos.writeObject(newUserInput);
                 }
 
                 System.out.println("waiting for server message");
-                serverResponse =  (String)ois.readObject();
-                System.out.println("#########Server sent me:" + serverResponse);
+//                serverResponse = (String) ois.readObject();
+//                if (((String)serverResponse).equals("new command")) {
+                    // update the onlineList
+
+
+
+//                System.out.println("#########Server sent me:" + serverResponse);
             } while (true);
             oos.flush();
             oos.close();

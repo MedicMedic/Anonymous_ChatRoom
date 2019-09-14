@@ -14,5 +14,7 @@ public class test {
         System.out.println(st.nextElement());
         String target = (String)st.nextElement();
         System.out.println(dudu.substring(5+target.length()));
+        String a = "233";
+        System.out.println(a.equals("233"));
     }
 }

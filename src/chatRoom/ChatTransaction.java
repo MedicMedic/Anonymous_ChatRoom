@@ -42,7 +42,8 @@ public class ChatTransaction implements Runnable{
             onlineList.put(nickName, new HashMap<>());
 
             for(String target : onlineList.keySet())
-                onlineList.get(nickName).put(target, new Stack<>());
+                if(!target.equals(nickName))
+                    onlineList.get(nickName).put(target, new Stack<>());
             // first load onlineList
             oos.writeObject(onlineList);
 
@@ -50,7 +51,6 @@ public class ChatTransaction implements Runnable{
             String message;
 
             do {
-
                 System.out.println("Waiting for client request");
                 String clientRequest = (String)ois.readObject();
                 System.out.println("New client message received:" + clientRequest);
@@ -67,7 +67,7 @@ public class ChatTransaction implements Runnable{
                 else if (clientRequest.equals("UpdateList")){
                     oos.writeObject(onlineList.get(nickName));
                     // when the message is send, immediately delete the cache
-                    onlineList.values().clear();
+//                    onlineList.values().clear();
                 }
                 else if( clientRequest.startsWith("Msg")){
                     StringTokenizer st = new StringTokenizer(clientRequest, " ");
@@ -75,13 +75,14 @@ public class ChatTransaction implements Runnable{
                     target = (String)st.nextElement();
                     message = clientRequest.substring(5+target.length());
                     //Todo: write Lock
-                    if(!onlineList.get(nickName).isEmpty()) {
+//                    if(!onlineList.get(nickName).isEmpty()) {
                         onlineList.get(nickName).get(target).push(message);
-                    }else{
-                        onlineList.get(nickName).put(target, new Stack<>());
-                    }
+//                    }else{
+//                        onlineList.get(nickName).put(target, new Stack<>());
+//                    }
                     // write release
-                    System.out.println("Your message has saved");
+//                    System.out.println("Your message has saved");
+//                    oos.writeObject("Your message has saved");
                 }
 //                else if(( instanceof HashMap  ){
 //
