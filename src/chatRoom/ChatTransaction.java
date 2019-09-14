@@ -29,9 +29,17 @@ public class ChatTransaction implements Runnable{
 
 
             // DONE: send the list of users to the client
-//            String clientNameRequest = br.readLine();
-            String clientNameRequest = (String)ois.readObject();
-            nickName = clientNameRequest;
+            String nickName;
+            do{
+                nickName = (String)ois.readObject();
+                if(onlineList.keySet().contains(nickName))
+                    oos.writeObject("duplicated");
+                else{
+                    oos.writeObject("successful");
+                    break;
+                }
+            }while(true);
+
             if(!onlineList.isEmpty()) {
                 for (HashMap<String, Stack<String>> target : onlineList.values())
                     target.put(nickName, new Stack<String>());

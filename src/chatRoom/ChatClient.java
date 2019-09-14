@@ -37,8 +37,20 @@ public class ChatClient implements Runnable{
             // TODO: show on gui
             // initialize your Nickname
             System.out.println("Welcome to anonymous chatRoom, Please enter you Nickname");
-            String nickName = keyboardInput.nextLine();
-            oos.writeObject(nickName);
+
+            String nickName;
+
+            // check if the nick Name is already existing!
+            do {
+                nickName = keyboardInput.nextLine();
+                oos.writeObject(nickName);
+                if(((String)ois.readObject()).equals("duplicated")){
+                    System.out.println(nickName + " is already existing, change another one!");
+                }else {
+
+                    break;
+                }
+            }while(true);
 
             Object serverResponse;
             serverResponse = ois.readObject();
@@ -48,9 +60,41 @@ public class ChatClient implements Runnable{
             serverResponse = ois.readObject();
             onlineList = (HashMap)serverResponse;
 
-            HashMap<String, Stack<String>> temp;
+
 // TODO:update messageList per 5 second
 
+            Timer updateRequest = new Timer();
+            updateRequest.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println("########List fresh time######");
+                    try {
+                        oos.writeObject("UpdateList");
+
+
+                        HashMap<String, Stack<String>> temp;
+                        temp = (HashMap)ois.readObject();
+                        for(String sender : temp.keySet()){
+                            if(onlineList.containsKey(sender)){
+                                while(!temp.get(sender).isEmpty())
+                                    onlineList.get(sender).push(temp.get(sender).pop());
+                                //:Todo: create a new receive panel
+                            }else{
+                                onlineList.put(sender, new Stack<>());
+                                while(!temp.get(sender).isEmpty())
+                                    onlineList.get(sender).push(temp.get(sender).pop());
+                                //:Todo: create a new receive panel
+                            }
+                        }
+                        for(String s : onlineList.keySet())
+                            System.out.println(s);
+
+                    } catch (IOException | ClassNotFoundException e) {
+                        System.err.println("There is exception :" + e);
+
+                    }
+                }
+            }, 1000, 10000);
             do {
                 System.out.println("waiting for =" + nickName + "= input");
 
@@ -61,25 +105,6 @@ public class ChatClient implements Runnable{
 
                 if (newUserInput.startsWith("terminate")) {
                     break;
-                }else if(newUserInput.equals("UpdateList")){
-                    oos.writeObject("UpdateList");
-
-                    temp = (HashMap)ois.readObject();
-                    for(String sender : temp.keySet()){
-                        if(onlineList.containsKey(sender)){
-                            while(!temp.get(sender).isEmpty())
-                                onlineList.get(sender).push(temp.get(sender).pop());
-                            //:Todo: create a new receive panel
-                        }else{
-                            onlineList.put(sender, new Stack<>());
-                            while(!temp.get(sender).isEmpty())
-                                onlineList.get(sender).push(temp.get(sender).pop());
-                            //:Todo: create a new receive panel
-                        }
-                    }
-                    for(String s : onlineList.keySet())
-                        System.out.println(s);
-
                 }else if(newUserInput.startsWith("Msg")){
                     oos.writeObject(newUserInput);
                 }
@@ -98,6 +123,7 @@ public class ChatClient implements Runnable{
             ois.close();
             socket.close();
             keyboardInput.close();
+            updateRequest.cancel();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Client error with game: " + e);
         }
@@ -107,6 +133,5 @@ public class ChatClient implements Runnable{
 
         new Thread(new ChatClient()).start();
         new Thread(new ChatClient()).start();
-
     }
 }
