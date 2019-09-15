@@ -61,7 +61,6 @@ public class ChatTransaction implements Runnable {
             // add new nick Name, allocate the space to onlineList
             onlineList.put(nickName, new HashMap<String, Stack<String>>());
 
-
             // add other user into new user's hashMap, except itself
             for (String target : onlineList.keySet())
                 if (!target.equals(nickName))

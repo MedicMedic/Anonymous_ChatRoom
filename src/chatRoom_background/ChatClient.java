@@ -1,5 +1,7 @@
 package chatRoom_background;
 
+import chatRoom_foreground.ChatRoom_Login;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -38,6 +40,7 @@ public class ChatClient implements Runnable {
 
 
             // TODO: show on gui
+            new ChatRoom_Login();
             // initialize your Nickname
             System.out.println("Welcome to anonymous chatRoom, Please enter you Nickname: ");
 
@@ -84,6 +87,7 @@ public class ChatClient implements Runnable {
                 }
 
                 System.out.println("waiting for server message");
+                //:Todo: update view
 //                updateRequest.schedule(new TimerTask() {
 //                    @Override
 //                    public void run() {
