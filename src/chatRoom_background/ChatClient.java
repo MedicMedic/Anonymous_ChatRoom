@@ -12,6 +12,8 @@ public class ChatClient implements Runnable {
 
     private static HashMap<String, Stack<String>> onlineList;
 
+    private boolean sign = false;
+
     // non-parameter constructor
     public ChatClient() {
     }
@@ -40,9 +42,10 @@ public class ChatClient implements Runnable {
 
 
             // TODO: show on gui
-            new ChatRoom_Login();
+            new ChatRoom_Login(oos, ois, sign);
+            while(!sign){}
             // initialize your Nickname
-            System.out.println("Welcome to anonymous chatRoom, Please enter you Nickname: ");
+//            System.out.println("Welcome to anonymous chatRoom, Please enter you Nickname: ");
 
             // check if the nick Name is already existing!
             do {
