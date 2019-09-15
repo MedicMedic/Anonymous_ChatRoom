@@ -1,4 +1,4 @@
-package chatRoom;
+package chatRoom_background;
 
 import java.net.*;
 import java.io.*;
@@ -11,34 +11,36 @@ public class ChatServer {
 
 
     private static boolean stopRequested;
-
+    private static boolean lock = true;
     // Avoid problems like deadlock, conflict or starvation
 
-    private static HashMap<String, HashMap<String, Stack<String>>>  onlineList= new HashMap<>();
+    public static HashMap<String, HashMap<String, Stack<String>>> onlineList = new HashMap<>();
     /*
       use the Singleton to ensure the server could be at most one
       and just be used in package
     */
 
     // constructor
-    private ChatServer(){
+    private ChatServer() {
         stopRequested = false;
     }
-    private static class SingletonBuilder{
+
+    private static class SingletonBuilder {
         private static ChatServer chatServer = new ChatServer();
     }
-    protected static ChatServer getServer(){
+
+    protected static ChatServer getServer() {
         return SingletonBuilder.chatServer;
     }
 
     // start the chatServer
-    public static void startServer(){
+    public static void startServer() {
         stopRequested = false;
         ServerSocket serverSocket = null;
-        try{
+        try {
             serverSocket = new ServerSocket(PORT);
             System.out.println("Server started at " + InetAddress.getLocalHost() + " on port " + PORT);
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.err.println("server can't listen on port: " + e);
             System.exit(-1);
         }
@@ -50,8 +52,10 @@ public class ChatServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection made with " + socket.getInetAddress());
                 // TODO: add code to get name of the user
-                Thread thread = new Thread(new ChatTransaction(socket, onlineList));
+                Thread thread = new Thread(new ChatTransaction(socket, onlineList, lock));
+                System.out.println(thread.getPriority());
                 thread.start();
+
             }
             serverSocket.close();
         } catch (IOException e) {
@@ -61,7 +65,7 @@ public class ChatServer {
     }
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ChatServer.startServer();
     }
 }
