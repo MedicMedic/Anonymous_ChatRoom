@@ -1,9 +1,6 @@
 package chatRoom;
 
-import java.util.HashMap;
-import java.util.StringTokenizer;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class test {
     public static void main(String[] args){
@@ -19,15 +16,18 @@ public class test {
         String a = "233";
         System.out.println(a.equals("233"));
 
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("test");
-            }
-        }, 1000, 2000);
-
-        System.out.println("fail"); System.out.println("fail"); System.out.println("fail"); System.out.println("fail");
-
+//        Timer timer = new Timer();
+//        timer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                System.out.println("test");
+//            }
+//        }, 1000, 2000);
+//
+//        System.out.println("fail"); System.out.println("fail"); System.out.println("fail"); System.out.println("fail");
+        HashMap<String, Stack<String>> list = new HashMap<>();
+        list.put("du", new Stack<String>());
+        list.get("du").push("sadafd");
+        System.out.println(list.get("du").peek());
     }
 }

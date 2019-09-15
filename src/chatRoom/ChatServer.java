@@ -13,7 +13,6 @@ public class ChatServer {
     private static boolean stopRequested;
 
     // Avoid problems like deadlock, conflict or starvation
-    private static int numReaders = 0;
 
     private static HashMap<String, HashMap<String, Stack<String>>>  onlineList= new HashMap<>();
     /*
@@ -47,7 +46,7 @@ public class ChatServer {
         try {
             while (!stopRequested) {
 
-                // serverSocket listen to the client socket and accept it to make connection
+                // srverSocket listen to the client socket and accept it to make connection
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection made with " + socket.getInetAddress());
                 // TODO: add code to get name of the user

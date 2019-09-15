@@ -12,6 +12,7 @@ public class ChatTransaction implements Runnable{
     private Socket socket;
     private static HashMap<String, HashMap<String,Stack<String>>> onlineList;
 
+    private static boolean lock = true;
 
     public ChatTransaction(Socket socket, HashMap<String, HashMap<String, Stack<String>>> onlineList) {
         this.socket = socket;
@@ -21,8 +22,6 @@ public class ChatTransaction implements Runnable{
     public void run() {
         ObjectInputStream ois;
         ObjectOutputStream oos;
-        PrintWriter pw; // output stream to client
-        BufferedReader br; // input stream from client
         try {
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream() );
@@ -31,13 +30,21 @@ public class ChatTransaction implements Runnable{
             // DONE: send the list of users to the client
             String nickName;
             do{
+//                while(!lock){}
+//                lock = false;
                 nickName = (String)ois.readObject();
-                if(onlineList.keySet().contains(nickName))
+                if(onlineList.isEmpty()){
+                    oos.writeObject("successful");
+                    break;
+                }
+                else if(onlineList.keySet().contains(nickName))
                     oos.writeObject("duplicated");
+
                 else{
                     oos.writeObject("successful");
                     break;
                 }
+
             }while(true);
 
             if(!onlineList.isEmpty()) {
@@ -46,6 +53,8 @@ public class ChatTransaction implements Runnable{
             }
             oos.writeObject("Welcome "+ nickName);
 
+            while(!lock){}
+            lock = false;
             // put the new k:user - v:
             onlineList.put(nickName, new HashMap<>());
 
@@ -53,11 +62,13 @@ public class ChatTransaction implements Runnable{
                 if(!target.equals(nickName))
                     onlineList.get(nickName).put(target, new Stack<>());
             // first load onlineList
-            oos.writeObject(onlineList);
+            oos.writeObject(onlineList.get(nickName));
+            lock = true;
+//            lock = true;
+
 
             String target;
             String message;
-
             do {
                 System.out.println("Waiting for client request");
                 String clientRequest = (String)ois.readObject();
@@ -70,6 +81,9 @@ public class ChatTransaction implements Runnable{
 
                     // TODO: remove client from the list
                     oos.writeObject("Client terminating, closing socket");
+                    onlineList.remove(nickName);
+                    for(HashMap map : onlineList.values())
+                        map.remove(nickName);
                     break;
                 }
                 else if (clientRequest.equals("UpdateList")){
@@ -85,27 +99,7 @@ public class ChatTransaction implements Runnable{
                     //Todo: write Lock
 //                    if(!onlineList.get(nickName).isEmpty()) {
                         onlineList.get(nickName).get(target).push(message);
-//                    }else{
-//                        onlineList.get(nickName).put(target, new Stack<>());
-//                    }
-                    // write release
-//                    System.out.println("Your message has saved");
-//                    oos.writeObject("Your message has saved");
                 }
-//                else if(( instanceof HashMap  ){
-//
-//                }
-//                else if(((String)(clientRequest)).startsWith(nickName)){
-//                    pw.println(clientRequest);
-//                    String message = cut;
-//                    cut your own name, and send the rest message back
-                    //also do the refresh job, but how
-                    //HashMap<String, Stack<String>> temp = onlineList;
-                    //temp's key add the message
-                    //send it back
-                    //delete client's own key,
-                    //client check new list, find that information
-//                }
 
                 else {
 //                    pw.println("Unexpected client message");

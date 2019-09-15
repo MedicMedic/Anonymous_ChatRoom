@@ -15,8 +15,10 @@ public class ChatClient implements Runnable{
 
     // thread start
     public void run() {
+        String nickName;
         Socket socket = null;
         Scanner keyboardInput = new Scanner(System.in);
+
         // create a socket for communication
         try {
             socket = new Socket(HOST_NAME, HOST_PORT);
@@ -38,22 +40,19 @@ public class ChatClient implements Runnable{
             // initialize your Nickname
             System.out.println("Welcome to anonymous chatRoom, Please enter you Nickname");
 
-            String nickName;
-
             // check if the nick Name is already existing!
             do {
                 nickName = keyboardInput.nextLine();
                 oos.writeObject(nickName);
                 if(((String)ois.readObject()).equals("duplicated")){
                     System.out.println(nickName + " is already existing, change another one!");
-                }else {
-
+                }else
                     break;
-                }
+
             }while(true);
 
             Object serverResponse;
-            serverResponse = ois.readObject();
+            serverResponse = ois.readObject(); // Welcome, nickname
             System.out.println("##########Server sent me:" + (String)serverResponse);
 
             // first load the online List
@@ -62,39 +61,40 @@ public class ChatClient implements Runnable{
 
 
 // TODO:update messageList per 5 second
-
-            Timer updateRequest = new Timer();
-            updateRequest.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    System.out.println("########List fresh time######");
-                    try {
-                        oos.writeObject("UpdateList");
-
-
-                        HashMap<String, Stack<String>> temp;
-                        temp = (HashMap)ois.readObject();
-                        for(String sender : temp.keySet()){
-                            if(onlineList.containsKey(sender)){
-                                while(!temp.get(sender).isEmpty())
-                                    onlineList.get(sender).push(temp.get(sender).pop());
-                                //:Todo: create a new receive panel
-                            }else{
-                                onlineList.put(sender, new Stack<>());
-                                while(!temp.get(sender).isEmpty())
-                                    onlineList.get(sender).push(temp.get(sender).pop());
-                                //:Todo: create a new receive panel
-                            }
-                        }
-                        for(String s : onlineList.keySet())
-                            System.out.println(s);
-
-                    } catch (IOException | ClassNotFoundException e) {
-                        System.err.println("There is exception :" + e);
-
-                    }
-                }
-            }, 1000, 10000);
+//
+//            Timer updateRequest = new Timer();
+//            updateRequest.schedule(new TimerTask() {
+//                @Override
+//                public void run() {
+////                    System.out.println("########List fresh time######");
+//                    try {
+//                        oos.writeObject("UpdateList");
+//
+//
+//                        HashMap<String, Stack<String>> temp;
+//                        temp = (HashMap)ois.readObject();
+//                        for(String sender : temp.keySet()){
+//                            if(onlineList.containsKey(sender)){
+//                                while(!temp.get(sender).isEmpty())
+//                                    onlineList.get(sender).push(temp.get(sender).pop());
+//                                //:Todo: create a new receive panel
+//                            }else{
+//                                onlineList.put(sender, new Stack<>());
+//                                while(!temp.get(sender).isEmpty())
+//                                    onlineList.get(sender).push(temp.get(sender).pop());
+//                                //:Todo: create a new receive panel
+//                            }
+//                        }
+//                        for(String s : onlineList.keySet())
+//                            if(!onlineList.get(s).isEmpty()) {
+//                                System.out.println(s + " send me" + onlineList.get(s).peek());
+//                            }
+//                    } catch (IOException | ClassNotFoundException e) {
+//                        System.err.println("There is exception :" + e);
+//
+//                    }
+//                }
+//            }, 1000, 5000);
             do {
                 System.out.println("waiting for =" + nickName + "= input");
 
@@ -103,27 +103,22 @@ public class ChatClient implements Runnable{
 //                oos.writeObject(newUserInput);
 
 
-                if (newUserInput.startsWith("terminate")) {
+                if (newUserInput.equals("terminate")) {
+                    oos.writeObject(newUserInput);
                     break;
                 }else if(newUserInput.startsWith("Msg")){
                     oos.writeObject(newUserInput);
                 }
 
                 System.out.println("waiting for server message");
-//                serverResponse = (String) ois.readObject();
-//                if (((String)serverResponse).equals("new command")) {
-                    // update the onlineList
 
-
-
-//                System.out.println("#########Server sent me:" + serverResponse);
             } while (true);
             oos.flush();
             oos.close();
             ois.close();
             socket.close();
             keyboardInput.close();
-            updateRequest.cancel();
+//            updateRequest.cancel();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Client error with game: " + e);
         }
@@ -131,7 +126,10 @@ public class ChatClient implements Runnable{
 
     public static void main(String[] args) {
 
-        new Thread(new ChatClient()).start();
-        new Thread(new ChatClient()).start();
+        new Thread(new ChatClient(), "Medic").start();
+        new Thread(new ChatClient(), "Mao").start();
+
+//        new Thread(new ChatClient()).start();
+//        new Thread(new ChatClient()).start();
     }
 }
