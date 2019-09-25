@@ -1,5 +1,6 @@
 package chatRoom_background;
 
+import ChatRoom_controller.ChatJoinController;
 import chatRoom_foreground.ChatJoin;
 import chatRoom_foreground.ChatWindow;
 
@@ -57,9 +58,9 @@ public class ChatClient implements Runnable {
 
 
             // disposable instance
-//            write.lock();
-            this.nickName = new ChatJoin(nickName,oos, ois, sign).getNickName();
-//            write.unlock();
+            write.lock();
+            this.nickName = new ChatJoinController(new ChatJoin(), oos, ois).getNickName();
+            write.unlock();
             while(!sign){}
             new ChatWindow(nickName,oos,ois);
             // initialize your Nickname

@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ChatJoin extends JFrame implements ActionListener{
+public class ChatJoin extends JFrame {
 
     // instance filed
     private JTextField heading;
@@ -25,7 +25,7 @@ public class ChatJoin extends JFrame implements ActionListener{
     private String nickName;
 
 
-    public ChatJoin(String nickName, ObjectOutputStream oos, ObjectInputStream ois, boolean sign){
+    public ChatJoin(){
         this.nickName = nickName;
         this.oos = oos;
         this.ois = ois;
@@ -40,11 +40,9 @@ public class ChatJoin extends JFrame implements ActionListener{
         inputNickName = new JTextField("nickName");
         inputNickName.setHorizontalAlignment(JTextField.CENTER);
 
-        warning = new JTextField("Name Exisiting");
-        warning.setVisible(false);
+        warning = new JTextField(10);
 
         join = new JButton("Join and Talk");
-        join.addActionListener(this);
 
         //        frame.setLayout(new GridLayout(3,1));
         this.setLayout(new FlowLayout());
@@ -61,25 +59,19 @@ public class ChatJoin extends JFrame implements ActionListener{
         this.setVisible(true);
         this.setDefaultCloseOperation(new JFrame().EXIT_ON_CLOSE);
     }
+
+    public JButton getJoinButton(){
+        return this.join;
+    }
+    public JTextField getWarning(){
+        return this.warning;
+    }
     public String getNickName(){
         return this.nickName;
     }
-    public void actionPerformed(ActionEvent e){
-        if(e.getSource() == join){
-            try {
-
-                this.nickName = inputNickName.getText();
-                oos.writeObject(nickName);
-                if (((String) ois.readObject()).equals("duplicated")) {
-                    warning.setVisible(true);
-                }else {
-                    this.sign = true;
-                    this.dispose();
-                }
-            }catch(IOException | ClassNotFoundException ex) {
-                System.out.println("Exception occurs " + ex);
-            }
-        }
+    public JTextField getInputNickName(){
+        return this.inputNickName;
     }
+
 
 }
