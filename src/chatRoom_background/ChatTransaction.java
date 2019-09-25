@@ -2,17 +2,24 @@ package chatRoom_background;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ChatTransaction implements Runnable {
+
+    // instance field
     private String nickName;
     private Socket socket;
     private static HashMap<String, HashMap<String, Stack<String>>> onlineList;
 
-    private boolean lock;
+    private volatile boolean lock;
+
+    ObjectInputStream ois;
+    ObjectOutputStream oos;
+    static ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private static Lock read = rwl.readLock();
+    private static Lock write = rwl.writeLock();
 
 //    private boolean isStoped = false;
 
@@ -22,53 +29,61 @@ public class ChatTransaction implements Runnable {
         this.lock = lock;
     }
 
+    private void initilize(){
+       write.lock();
+       try {
+           do {
+//                while(!lock){}
+//                lock = false;
+               nickName = (String) ois.readObject();
+               if (onlineList.isEmpty()) {
+                   oos.writeObject("successful");
+                   break;
+               } else if (onlineList.keySet().contains(nickName))
+                   oos.writeObject("duplicated");
+
+               else {
+                   oos.writeObject("successful");
+                   break;
+               }
+
+           } while (true);
+
+           // for existing user, add new user in their onlineList HashMap
+           for (String target : onlineList.keySet()) {
+               onlineList.get(target).put(nickName, new Stack<String>());
+
+           }
+
+           // add new nick Name, allocate the space to onlineList
+           onlineList.put(nickName, new HashMap<String, Stack<String>>());
+
+           // add other user into new user's hashMap, except itself
+           for (String target : onlineList.keySet())
+               if (!target.equals(nickName))
+                   onlineList.get(nickName).put(target, new Stack<String>());
+           // first load onlineList
+           oos.writeObject(onlineList.get(nickName));
+           lock = true;
+           oos.writeObject("Welcome " + nickName);
+       }catch(IOException | ClassNotFoundException e){
+           System.err.println("Error occurs  " + e);
+       } finally {
+           write.unlock();
+       }
+    }
+
+
     public void run() {
-        ObjectInputStream ois;
-        ObjectOutputStream oos;
         try {
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
 
 
+            oos.writeObject(this.rwl);
             // DONE: send the list of users to the client
-            String nickName;
-            while (!lock) {
-            }
-            lock = false;
-            do {
-//                while(!lock){}
-//                lock = false;
-                nickName = (String) ois.readObject();
-                if (onlineList.isEmpty()) {
-                    oos.writeObject("successful");
-                    break;
-                } else if (onlineList.keySet().contains(nickName))
-                    oos.writeObject("duplicated");
+           this.initilize();
 
-                else {
-                    oos.writeObject("successful");
-                    break;
-                }
-
-            } while (true);
-
-            // for existing user, add new user in their onlineList HashMap
-            for (String target : onlineList.keySet()) {
-                onlineList.get(target).put(nickName, new Stack<String>());
-
-            }
-
-            // add new nick Name, allocate the space to onlineList
-            onlineList.put(nickName, new HashMap<String, Stack<String>>());
-
-            // add other user into new user's hashMap, except itself
-            for (String target : onlineList.keySet())
-                if (!target.equals(nickName))
-                    onlineList.get(nickName).put(target, new Stack<String>());
-            // first load onlineList
-            oos.writeObject(onlineList.get(nickName));
-            lock = true;
-            oos.writeObject("Welcome " + nickName);
 
 
             String target;

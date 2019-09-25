@@ -1,26 +1,35 @@
 package chatRoom_background;
 
-import chatRoom_foreground.ChatRoom_Login;
+import chatRoom_foreground.ChatJoin;
+import chatRoom_foreground.ChatWindow;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class ChatClient implements Runnable {
-    public static final String HOST_NAME = "localhost";
-    public static final int HOST_PORT = 8888; // host port number
+    private static final String HOST_NAME = "localhost";
+    private static final int HOST_PORT = 8888; // host port number
 
-    private static HashMap<String, Stack<String>> onlineList;
+    private static HashMap<String, HashMap<String, Stack<String>>> onlineList;
 
     private boolean sign = false;
 
+    private String nickName;
+
+    static ReentrantReadWriteLock rwlock;
+    private static Lock read;
+    private static Lock write;
+    private ObjectOutputStream oos;
+    private ObjectInputStream ois;
     // non-parameter constructor
-    public ChatClient() {
+    ChatClient() {
     }
 
     // thread start
     public void run() {
-        String nickName;
         Socket socket = null;
         Scanner keyboardInput = new Scanner(System.in);
 
@@ -33,37 +42,38 @@ public class ChatClient implements Runnable {
             System.exit(-1);
         }
 
-        ObjectOutputStream oos;
-        ObjectInputStream ois;
         try {
-
+            // use ObjectStream to send/receive to exchange information with Server
             oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
 
 
+            // deliver the lock
+             this.rwlock = (ReentrantReadWriteLock) ois.readObject();
+             read = rwlock.readLock();
+             write = rwlock.writeLock();
+
             // TODO: show on gui
-            new ChatRoom_Login(oos, ois, sign);
+
+
+            // disposable instance
+//            write.lock();
+            this.nickName = new ChatJoin(nickName,oos, ois, sign).getNickName();
+//            write.unlock();
             while(!sign){}
+            new ChatWindow(nickName,oos,ois);
             // initialize your Nickname
 //            System.out.println("Welcome to anonymous chatRoom, Please enter you Nickname: ");
 
             // check if the nick Name is already existing!
-            do {
-                nickName = keyboardInput.nextLine();
-                oos.writeObject(nickName);
-                if (((String) ois.readObject()).equals("duplicated")) {
-                    System.out.println(nickName + " is already existing, change another one!");
-                } else
-                    break;
 
-            } while (true);
 
             Object serverResponse;
 
 
             // first load the online List
             serverResponse = ois.readObject();
-            onlineList = (HashMap) serverResponse;
+            onlineList = (HashMap)serverResponse;
 
             serverResponse = ois.readObject(); // Welcome, nickname
             System.out.println("##########Server sent me:" + (String) serverResponse);
@@ -73,7 +83,7 @@ public class ChatClient implements Runnable {
 
             do {
                 System.out.print(nickName + " said: ");
-                System.out.println("");
+                System.out.println();
 
                 String newUserInput = keyboardInput.nextLine();
 
