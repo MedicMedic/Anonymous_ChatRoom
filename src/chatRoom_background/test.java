@@ -22,7 +22,6 @@ public class test {
 ////            public void run() {
 ////                System.out.println("test");
 ////            }
-////        }, 1000, 2000);
 ////
 ////        System.out.println("fail"); System.out.println("fail"); System.out.println("fail"); System.out.println("fail");
 //        HashMap<String, Stack<String>> list = new HashMap<>();

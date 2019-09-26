@@ -11,7 +11,6 @@ public class ChatServer {
 
 
     private static boolean stopRequested;
-    private static boolean lock = true;
     // Avoid problems like deadlock, conflict or starvation
 
     public static HashMap<String, HashMap<String, Stack<String>>> onlineList = new HashMap<>();
@@ -34,7 +33,7 @@ public class ChatServer {
     }
 
     // start the chatServer
-    public static void startServer() {
+    private static void startServer() {
         stopRequested = false;
         ServerSocket serverSocket = null;
         try {
@@ -52,7 +51,7 @@ public class ChatServer {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connection made with " + socket.getInetAddress());
                 // TODO: add code to get name of the user
-                Thread thread = new Thread(new ChatTransaction(socket, onlineList, lock));
+                Thread thread = new Thread(new ChatSeverSocket(socket, onlineList));
                 System.out.println(thread.getPriority());
                 thread.start();
 

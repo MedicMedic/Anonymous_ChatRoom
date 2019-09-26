@@ -6,70 +6,64 @@ import java.util.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ChatTransaction implements Runnable {
+public class ChatSeverSocket implements Runnable {
 
     // instance field
     private String nickName;
     private Socket socket;
     private static HashMap<String, HashMap<String, Stack<String>>> onlineList;
 
-    private volatile boolean lock;
 
-    ObjectInputStream ois;
-    ObjectOutputStream oos;
-    static ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+    private ObjectInputStream ois;
+    private ObjectOutputStream oos;
+    private static ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
     private static Lock read = rwl.readLock();
     private static Lock write = rwl.writeLock();
 
 //    private boolean isStoped = false;
 
-    public ChatTransaction(Socket socket, HashMap<String, HashMap<String, Stack<String>>> onlineList, boolean lock) {
+    ChatSeverSocket(Socket socket, HashMap<String, HashMap<String, Stack<String>>> onlineList) {
         this.socket = socket;
-        this.onlineList = onlineList;
-        this.lock = lock;
+        ChatSeverSocket.onlineList = onlineList;
     }
-
     private void initilize(){
-       write.lock();
        try {
            do {
-//                while(!lock){}
-//                lock = false;
-               nickName = (String) ois.readObject();
+               this.nickName = (String) ois.readObject();
                if (onlineList.isEmpty()) {
                    oos.writeObject("successful");
                    break;
-               } else if (onlineList.keySet().contains(nickName))
+               } else if (onlineList.containsKey(nickName)) {
                    oos.writeObject("duplicated");
-
-               else {
+               } else {
                    oos.writeObject("successful");
                    break;
                }
-
            } while (true);
+            try{
+                write.lock();
+                // for existing user, add new user in their onlineList HashMap
+                for (String target : onlineList.keySet()) {
+                    onlineList.get(target).put(this.nickName, new Stack<String>());
 
-           // for existing user, add new user in their onlineList HashMap
-           for (String target : onlineList.keySet()) {
-               onlineList.get(target).put(nickName, new Stack<String>());
+                }
 
-           }
+                // add new nick Name, allocate the space to onlineList
+                onlineList.put(this.nickName, new HashMap<String, Stack<String>>());
 
-           // add new nick Name, allocate the space to onlineList
-           onlineList.put(nickName, new HashMap<String, Stack<String>>());
+                // add other user into new user's hashMap, except itself
+                for (String target : onlineList.keySet())
+                    if (!target.equals(this.nickName))
+                        onlineList.get(this.nickName).put(target, new Stack<String>());
+            }finally{
+                write.unlock();
+            }
 
-           // add other user into new user's hashMap, except itself
-           for (String target : onlineList.keySet())
-               if (!target.equals(nickName))
-                   onlineList.get(nickName).put(target, new Stack<String>());
            // first load onlineList
            oos.writeObject(onlineList.get(nickName));
-           lock = true;
-           oos.writeObject("Welcome " + nickName);
+//           oos.writeObject("Welcome " + nickName);
        }catch(IOException | ClassNotFoundException e){
            System.err.println("Error occurs  " + e);
-       } finally {
-           write.unlock();
        }
     }
 
@@ -80,9 +74,16 @@ public class ChatTransaction implements Runnable {
             ois = new ObjectInputStream(socket.getInputStream());
 
 
-            oos.writeObject(this.rwl);
             // DONE: send the list of users to the client
            this.initilize();
+
+           // TODO: test need to be deleted
+            for(String usr : onlineList.keySet()){
+                System.out.println(usr);
+                for(String sender :onlineList.get(usr).keySet()){
+                    System.out.println("   +" + sender);
+                }
+            }
 
 
 
@@ -90,11 +91,12 @@ public class ChatTransaction implements Runnable {
             String message;
             do {
                 System.out.println("Waiting for client request");
+
                 String clientRequest = (String) ois.readObject();
-                System.out.println("New client message received:" + clientRequest);
+                System.out.println(this.nickName +" received:" + clientRequest);
                 String response;
 
-
+                // Recognize request command
                 if (clientRequest.startsWith("terminate")) {
 
                     // TODO: remove client from the list
@@ -108,14 +110,19 @@ public class ChatTransaction implements Runnable {
                     // when the message is send, immediately delete the cache
 //                    onlineList.values().clear();
                 } else if (clientRequest.startsWith("Msg")) {
-                    StringTokenizer st = new StringTokenizer(clientRequest, " ");
+                    StringTokenizer st;
+                    st = new StringTokenizer(clientRequest, " ");
                     st.nextElement();
                     target = (String) st.nextElement();
                     message = clientRequest.substring(5 + target.length());
                     //Todo: write Lock
-//                    if(!onlineList.get(nickName).isEmpty()) {
-                    onlineList.get(nickName).get(target).push(message);
-                    oos.writeObject("Your message is received");
+                    try {
+                        write.lock();
+                        onlineList.get(target).get(this.nickName).push(message);
+                        oos.writeObject("Your message is received");
+                    }finally{
+                        write.unlock();
+                    }
                 }
 //            for test
                 else if (clientRequest.equals("show")) {
@@ -124,6 +131,8 @@ public class ChatTransaction implements Runnable {
                         System.out.println("+" + test);
                         for (String test2 : onlineList.get(test).keySet()) {
                             System.out.println("  -" + test2);
+                            for(String msg : onlineList.get(test).get(test2))
+                                System.out.println("     ++" + msg);
                         }
                     }
                     oos.writeObject("show message is received");

@@ -2,16 +2,45 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4e5752f-ba00-4830-8163-0d239716d052" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ChatRoom_controller/ChatJoinController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.Assignment_ChatRoom.vpp.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/..systemproject.vpp.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/.autoSaveProjectInfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/.systemproject.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/.systemproject.vpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/.vp.preference" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/.vp.preference" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEC.lod" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEC.lod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEMC.lod" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEMC.lod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/projectsViewInfo/xbrfmLaFYFAUAgeo" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/.vpprefdata/projectsViewInfo/xbrfmLaFYFAUAgeo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/Assignment_ChatRoom.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/Assignment_ChatRoom.vpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_controller/ChatJoinController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/ChatClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_foreground/ChatJoin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_foreground/ChatJoin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/tmp/Assignment_ChatRoom.vpp2962667456351249294.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/tmp/Assignment_ChatRoom.vpp2962667456351249294.tmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/ChatServer$SingletonBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/ChatServer$SingletonBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/ChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/ChatServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/ChatTransaction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_background/test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_foreground/ChatJoin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_foreground/ChatWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_foreground/ChatWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/tmp/.systemproject.vpp2432715365756804512.tmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/tmp/Assignment_ChatRoom.vpp2962667456351249294.tmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.Assignment_ChatRoom.vpp.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.vpprefdata/..systemproject.vpp.lck" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.vpprefdata/.autoSaveProjectInfo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.vpprefdata/.systemproject.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/.vpprefdata/.systemproject.vpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.vpprefdata/.vp.preference" beforeDir="false" afterPath="$PROJECT_DIR$/src/.vpprefdata/.vp.preference" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEC.lod" beforeDir="false" afterPath="$PROJECT_DIR$/src/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEC.lod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEMC.lod" beforeDir="false" afterPath="$PROJECT_DIR$/src/.vpprefdata/LayoutPerspectiveData/_C4AVxKD.AACAQOEMC.lod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/.vpprefdata/projectsViewInfo/xbrfmLaFYFAUAgeo" beforeDir="false" afterPath="$PROJECT_DIR$/src/.vpprefdata/projectsViewInfo/xbrfmLaFYFAUAgeo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Assignment_ChatRoom.vpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assignment_ChatRoom.vpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChatRoom_controller/ChatJoinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatRoom_controller/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom_background/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_background/ChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chatRoom_foreground/ChatJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_foreground/ChatJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/tmp/Assignment_ChatRoom.vpp2962667456351249294.tmp" beforeDir="false" afterPath="$PROJECT_DIR$/src/tmp/Assignment_ChatRoom.vpp2962667456351249294.tmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom_background/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_background/ChatServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom_background/ChatTransaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_background/ChatSeverSocket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom_background/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_background/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom_foreground/ChatJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_foreground/ChatLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom_foreground/ChatWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_foreground/ChatWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tmp/.systemproject.vpp2432715365756804512.tmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/tmp/Assignment_ChatRoom.vpp2962667456351249294.tmp" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -51,7 +80,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -66,12 +95,12 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.ChatClient (1)">
-    <configuration name="ChatClient (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chatRoom_background.ChatClient" />
+    <configuration name="ChatClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chatRoom.ChatClient" />
       <module name="Assignment_ChatRoom" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="chatRoom_background.*" />
+          <option name="PATTERN" value="chatRoom.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -80,11 +109,11 @@
       </method>
     </configuration>
     <configuration name="ChatClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="chatRoom.ChatClient" />
+      <option name="MAIN_CLASS_NAME" value="chatRoom_background.ChatClient" />
       <module name="Assignment_ChatRoom" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="chatRoom.*" />
+          <option name="PATTERN" value="chatRoom_background.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -105,7 +134,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ChatServer (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="ChatServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="chatRoom_background.ChatServer" />
       <module name="Assignment_ChatRoom" />
       <extension name="coverage">
@@ -118,7 +147,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="test (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="chatRoom_background.test" />
       <module name="Assignment_ChatRoom" />
       <extension name="coverage">
@@ -154,7 +183,7 @@
       <workItem from="1569084990427" duration="638000" />
       <workItem from="1569085933838" duration="94000" />
       <workItem from="1569313322771" duration="27000" />
-      <workItem from="1569375167561" duration="12857000" />
+      <workItem from="1569375167561" duration="41709000" />
     </task>
     <servers />
   </component>
@@ -187,24 +216,19 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/src/chatRoom_background/ChatTransaction.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/src/chatRoom_background/ChatTransaction.java</url>
-          <line>84</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/src/chatRoom_background/ChatTransaction.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/src/chatRoom_background/ChatTransaction.java</url>
+          <url>file://$PROJECT_DIR$/src/chatRoom_background/ChatSeverSocket.java</url>
           <line>71</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ChatRoom_controller/ChatController.java</url>
+          <line>63</line>
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/src/chatRoom_background/ChatSeverSocket.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
@@ -222,16 +246,6 @@
     <SUITE FILE_PATH="coverage/Assignment_ChatRoom$ChatServer.ic" NAME="ChatServer Coverage Results" MODIFIED="1568450384642" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>chatRoom.*</FILTER>
     </SUITE>
-  </component>
-  <component name="debuggerHistoryManager">
-    <expressions id="watch">
-      <expression>
-        <expression-string>((HashMap)((HashMap.Node)onlineList.entrySet().toArray()[0]).getValue()).entrySet().toArray()[0]</expression-string>
-        <language-id>JAVA</language-id>
-        <custom-info>java.util.HashMap.Node,java.util.HashMap</custom-info>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
-    </expressions>
   </component>
   <component name="masterDetails">
     <states>

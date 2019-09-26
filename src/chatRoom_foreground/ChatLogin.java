@@ -1,38 +1,22 @@
 package chatRoom_foreground;
 
-import javax.imageio.IIOException;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Scanner;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class ChatJoin extends JFrame {
+public class ChatLogin extends JFrame {
 
-    // instance filed
-    private JTextField heading;
     private JButton join;
     private JTextField inputNickName;
     private JTextField warning;
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
     private boolean sign;
-    private String nickName;
 
 
-    public ChatJoin(){
-        this.nickName = nickName;
-        this.oos = oos;
-        this.ois = ois;
-        this.sign = sign;
+    public ChatLogin(){
+
         this.setTitle("Login");
 
-        heading = new JTextField("Anonymous Chat Room");
+        // instance filed
+        JTextField heading = new JTextField("Anonymous Chat Room");
         heading.setEnabled(false);
 
         heading.setHorizontalAlignment(JTextField.CENTER);
@@ -44,7 +28,6 @@ public class ChatJoin extends JFrame {
 
         join = new JButton("Join and Talk");
 
-        //        frame.setLayout(new GridLayout(3,1));
         this.setLayout(new FlowLayout());
         this.add(heading);
         this.add(inputNickName);
@@ -66,9 +49,7 @@ public class ChatJoin extends JFrame {
     public JTextField getWarning(){
         return this.warning;
     }
-    public String getNickName(){
-        return this.nickName;
-    }
+
     public JTextField getInputNickName(){
         return this.inputNickName;
     }
