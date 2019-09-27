@@ -16,12 +16,16 @@ import java.util.TimerTask;
 
 public class ChatController implements ActionListener {
     private ChatLogin chatLogin;
+    private String ifLogin;
+
     private ChatWindow chatWindow;
+    private String nickName;
     private HashMap<String, Stack<String>> onlineList;
+    private boolean isStopped;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
-    private String nickName;
-    private String ifLogin;
+
+
     private Timer autoUpdate;
 
 
@@ -34,22 +38,25 @@ public class ChatController implements ActionListener {
         this.oos = oos;
         this.ois = ois;
         this.ifLogin=  "duplicated";
-        this.chatLogin.getJoinButton().addActionListener(this);
+        this.chatLogin.getLoginButton().addActionListener(this);
     }
 
     // constructor for ChatWindow
     public ChatController(ChatWindow chatWindow, String nickName, HashMap<String, Stack<String>> onlineList,
-                          ObjectOutputStream oos, ObjectInputStream ois){
+                          boolean isStopped, ObjectOutputStream oos, ObjectInputStream ois){
         this.chatWindow = chatWindow;
        this.nickName = nickName;
        this.onlineList = onlineList;
+       this.isStopped = isStopped;
        this.oos = oos;
        this.ois = ois;
        this.autoUpdate = new Timer();
 
 
-       // test
-        this.chatWindow.getTestButton().addActionListener(this);
+        this.chatWindow.getMsgButton().addActionListener(this);
+        this.chatWindow.getTerminate().addActionListener(this);
+        // test
+        this.chatWindow.getShowMessage().addActionListener(this);
     }
 
     // for ChatLogin functions
@@ -60,44 +67,60 @@ public class ChatController implements ActionListener {
         return this.nickName;
     }
 
+    class Update extends TimerTask{
+        private HashMap<String, Stack<String>> onlineList;
+        private ObjectOutputStream oos;
+        private ObjectInputStream ois;
+        Update(HashMap<String, Stack<String>> onlineList, ObjectOutputStream oos, ObjectInputStream ois){
+           this.onlineList = onlineList;
+           this.oos = oos;
+           this.ois = ois;
+        }
+
+        public void run() {
+            try {
+                ChatController.this.oos.writeObject("UpdateList");
+
+
+                HashMap<String, Stack<String>> temp;
+                temp = (HashMap)ChatController.this.ois.readObject();
+                // test
+
+                for(String sender : temp.keySet()){
+                    // old sender
+                    if(onlineList.containsKey(sender)){
+                        for(String message : temp.get(sender))
+                            onlineList.get(sender).push(message);
+                        // while(!temp.get(sender).isEmpty())
+                        //     onlineList.get(sender).push(temp.get(sender).pop());
+                        // //:Todo: create a new receive panel
+                    }else{  // new sender is needed to add
+                        onlineList.put(sender, new Stack<String>());
+                        // while(!temp.get(sender).isEmpty())
+                        //     onlineList.get(sender).push(temp.get(sender).pop());
+                        for(String message : temp.get(sender))
+                            onlineList.get(sender).push(message);
+
+                        // //:Todo: create a new receive panel
+                    }
+                }
+                for(String sender : temp.keySet())
+                    if(!temp.get(sender).isEmpty()) {
+                        System.out.println(sender + " send me" + temp.get(sender).peek());
+                    }
+            } catch (IOException | ClassNotFoundException e) {
+                System.err.println("There is exception :" + e);
+
+            }
+        }
+    }
    // for Chatwindow functions
    public void autoUpdateList(){
-        autoUpdate.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    oos.writeObject("UpdateList");
-
-
-                    HashMap<String, Stack<String>> temp;
-                    temp = (HashMap)ois.readObject();
-                    for(String sender : temp.keySet()){
-                        // old sender
-                        if(onlineList.containsKey(sender)){
-                            while(!temp.get(sender).isEmpty())
-                                onlineList.get(sender).push(temp.get(sender).pop());
-                            //:Todo: create a new receive panel
-                        }else{  // new sender is needed to add
-                            onlineList.put(sender, new Stack<>());
-                            while(!temp.get(sender).isEmpty())
-                                onlineList.get(sender).push(temp.get(sender).pop());
-                            //:Todo: create a new receive panel
-                        }
-                    }
-                    for(String s : temp.keySet())
-                        if(!temp.get(s).isEmpty()) {
-                            System.out.println(s + " send me" + temp.get(s).peek());
-                        }
-                } catch (IOException | ClassNotFoundException e) {
-                    System.err.println("There is exception :" + e);
-
-                }
-            }
-        }, 1000, 5000);
+        autoUpdate.schedule(new Update(this.onlineList, this.oos, this.ois), 1000, 5000);
    }
     // one for all controller actionListener
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource() == this.chatLogin.getJoinButton()) {
+//        if (e.getSource() == this.chatLogin.getLoginButton()) {
             if (this.chatLogin != null) {
             try {
                 String inputName = this.chatLogin.getInputNickName().getText();
@@ -121,15 +144,41 @@ public class ChatController implements ActionListener {
             }
 
         }
-        else if(e.getSource() == this.chatWindow.getTestButton()){
+        else if(e.getSource() == this.chatWindow.getMsgButton()){
                 try {
-                    oos.writeObject(this.chatWindow.getTestInput());
+                    oos.writeObject(this.chatWindow.getMsg());
                     System.out.println((String)ois.readObject());
                 } catch (IOException | ClassNotFoundException ex) {
                     System.err.println("Exception occurs" + ex);
                 }
         }
+        else if(e.getSource() == this.chatWindow.getTerminate()){
+            try{
+                oos.writeObject("terminate");
+                System.out.println((String)ois.readObject());
+                this.isStopped = true;
+                this.autoUpdate.cancel();
+            } catch (IOException | ClassNotFoundException ex) {
+                System.err.println("Exception occurs: " + ex);
+            }
+            }
+        else if(e.getSource() == this.chatWindow.getShowMessage()){
+
+                try {
+                    oos.writeObject("show");
+                    System.out.println((String)ois.readObject());
+                } catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                System.out.println(this.nickName);
+                for(String sender : onlineList.keySet()){
+                    System.out.println("  +" + sender);
+                    for(String message : onlineList.get(sender))
+                        System.out.println("    -" + message);
+                }
+            }
     }
 
 
 }
+
