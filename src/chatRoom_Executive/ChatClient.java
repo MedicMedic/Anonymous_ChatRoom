@@ -1,23 +1,18 @@
-package chatRoom_background;
+package chatRoom_Executive;
 
-import ChatRoom_controller.ChatController;
-import chatRoom_foreground.ChatLogin;
-import chatRoom_foreground.ChatWindow;
+import ChatRoom_Controller.ChatController;
+import chatRoom_View.ChatLogin;
+import chatRoom_View.ChatWindow;
 
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class ChatClient implements Runnable {
+public class ChatClient extends Thread  {
+
     private static final String HOST_NAME = "localhost";
     private static final int HOST_PORT = 8888; // host port number
 
-    private static HashMap<String, Stack<String>> onlineList;
-
-    private volatile boolean sign = false;
-
-    private ObjectOutputStream oos;
-    private ObjectInputStream ois;
     // non-parameter constructor
     ChatClient() {
     }
@@ -38,8 +33,8 @@ public class ChatClient implements Runnable {
 
         try {
             // use ObjectStream to send/receive to exchange information with Server
-            oos = new ObjectOutputStream(socket.getOutputStream());
-            ois = new ObjectInputStream(socket.getInputStream());
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 
 
 
@@ -51,25 +46,26 @@ public class ChatClient implements Runnable {
 
 
             // get the init inlineList
-            onlineList = (HashMap<String, Stack<String>>)ois.readObject();
+            HashMap<String, Stack<String>> onlineList = (HashMap<String, Stack<String>>) ois.readObject();
 
             // begin to chat
-            ChatController windowControl = new  ChatController(new ChatWindow(nickName), nickName, onlineList, oos, ois);
-            windowControl.autoUpdateList();
+            boolean isStopped = false;
+            ChatController windowControl = new  ChatController(new ChatWindow(nickName), nickName, onlineList, isStopped, oos, ois);
+//            windowControl.autoUpdateList();
             String response;
-           while(!sign){
+           while(!isStopped){
 //                   response = (String)ois.readObject();
 //               System.out.println(response);
 //               if(response.equals("terminate"))
 //                   break;
                Thread.onSpinWait();
            }
-
             oos.flush();
             oos.close();
             ois.close();
             socket.close();
             keyboardInput.close();
+            this.interrupt();
 //            updateRequest.cancel();
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Client error with game: " + e);
@@ -78,10 +74,11 @@ public class ChatClient implements Runnable {
 
     public static void main(String[] args) {
 
-        new Thread(new ChatClient(), "Medic").start();
-
-
-        new Thread(new ChatClient()).start();
-        new Thread(new ChatClient()).start();
+//        new Thread(new ChatClient(), "Medic").start();
+        new ChatClient().start();
+        new ChatClient().start();
+        new ChatClient().start();
+//        new Thread(new ChatClient()).start();
+//        new Thread(new ChatClient()).start();
     }
 }

@@ -1,6 +1,4 @@
-package chatRoom_background;
-
-import java.util.*;
+package chatRoom_Executive;
 
 public class test {
     public static void main(String[] args) {
@@ -28,6 +26,7 @@ public class test {
 //        list.put("du", new Stack<String>());
 //        list.get("du").push("sadafd");
 //        System.out.println(list.get("du").peek());
-        new Thread(new ChatClient()).start();
+//        new Thread(new ChatClient()).start();
+        new ChatClient().start();
     }
 }

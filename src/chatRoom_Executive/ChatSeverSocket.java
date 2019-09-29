@@ -1,4 +1,6 @@
-package chatRoom_background;
+package chatRoom_Executive;
+
+import chatRoom_Model.MessageMap;
 
 import java.io.*;
 import java.net.Socket;
@@ -22,7 +24,7 @@ public class ChatSeverSocket implements Runnable {
 
 //    private boolean isStoped = false;
 
-    ChatSeverSocket(Socket socket, HashMap<String, HashMap<String, Stack<String>>> onlineList) {
+    ChatSeverSocket(Socket socket, HashMap<String, MessageMap> onlineList) {
         this.socket = socket;
         ChatSeverSocket.onlineList = onlineList;
     }
@@ -94,19 +96,37 @@ public class ChatSeverSocket implements Runnable {
 
                 String clientRequest = (String) ois.readObject();
                 System.out.println(this.nickName +" received:" + clientRequest);
-                String response;
 
                 // Recognize request command
                 if (clientRequest.startsWith("terminate")) {
 
                     // TODO: remove client from the list
                     oos.writeObject("Client terminating, closing socket");
-                    onlineList.remove(nickName);
-                    for (HashMap map : onlineList.values())
-                        map.remove(nickName);
-                    break;
+                    try {
+                        write.lock();
+                        onlineList.remove(nickName);
+                        for (HashMap map : onlineList.values())
+                            map.remove(nickName);
+                        break;
+                    }finally {
+                        write.unlock();
+                    }
                 } else if (clientRequest.equals("UpdateList")) {
-                    oos.writeObject(onlineList.get(nickName));
+                    try{
+                        read.lock();
+                        HashMap<String, Stack<String>> temp = onlineList.get(this.nickName);
+                        System.out.println("In " +nickName+ " :");
+                        for(String me: onlineList.keySet()){
+                            System.out.println(" +" + me);
+                            for(String sender : onlineList.get(me).keySet())
+                                System.out.println("   -" + sender);
+                        }
+                        oos.writeObject("Prepare for updating");
+//                        oos.writeObject(onlineList.get(this.nickName));
+                        oos.writeObject(onlineList);
+                    }finally{
+                        read.unlock();
+                    }
                     // when the message is send, immediately delete the cache
 //                    onlineList.values().clear();
                 } else if (clientRequest.startsWith("Msg")) {

@@ -1,11 +1,11 @@
-package chatRoom_foreground;
+package chatRoom_View;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class ChatLogin extends JFrame {
 
-    private JButton join;
+    private JButton login;
     private JTextField inputNickName;
     private JTextField warning;
     private boolean sign;
@@ -26,12 +26,12 @@ public class ChatLogin extends JFrame {
 
         warning = new JTextField(10);
 
-        join = new JButton("Join and Talk");
+        login = new JButton("login and Talk");
 
         this.setLayout(new FlowLayout());
         this.add(heading);
         this.add(inputNickName);
-        this.add(join);
+        this.add(login);
         this.add(warning);
 
 
@@ -43,8 +43,8 @@ public class ChatLogin extends JFrame {
         this.setDefaultCloseOperation(new JFrame().EXIT_ON_CLOSE);
     }
 
-    public JButton getJoinButton(){
-        return this.join;
+    public JButton getLoginButton(){
+        return this.login;
     }
     public JTextField getWarning(){
         return this.warning;
