@@ -13,7 +13,7 @@ public class ChatSeverSocket implements Runnable {
     // instance field
     private String nickName;
     private Socket socket;
-    private static HashMap<String, HashMap<String, Stack<String>>> onlineList;
+    private static HashMap<String, MessageMap> onlineList;
 
 
     private ObjectInputStream ois;
@@ -51,7 +51,7 @@ public class ChatSeverSocket implements Runnable {
                 }
 
                 // add new nick Name, allocate the space to onlineList
-                onlineList.put(this.nickName, new HashMap<String, Stack<String>>());
+                onlineList.put(this.nickName, new MessageMap());
 
                 // add other user into new user's hashMap, except itself
                 for (String target : onlineList.keySet())
@@ -72,9 +72,8 @@ public class ChatSeverSocket implements Runnable {
 
     public void run() {
         try {
-            oos = new ObjectOutputStream(socket.getOutputStream());
             ois = new ObjectInputStream(socket.getInputStream());
-
+            oos = new ObjectOutputStream(socket.getOutputStream());
 
             // DONE: send the list of users to the client
            this.initilize();
@@ -114,16 +113,21 @@ public class ChatSeverSocket implements Runnable {
                 } else if (clientRequest.equals("UpdateList")) {
                     try{
                         read.lock();
-                        HashMap<String, Stack<String>> temp = onlineList.get(this.nickName);
-                        System.out.println("In " +nickName+ " :");
-                        for(String me: onlineList.keySet()){
-                            System.out.println(" +" + me);
-                            for(String sender : onlineList.get(me).keySet())
-                                System.out.println("   -" + sender);
+                        MessageMap temp = new MessageMap();
+                        for(String sender : onlineList.get(this.nickName).keySet()){
+                            temp.put(sender, new Stack<String>());
+                                while(!onlineList.get(this.nickName).get(sender).isEmpty())
+                                    temp.get(sender).push(onlineList.get(this.nickName).get(sender).pop());
                         }
+
+//                        System.out.println("In " +nickName+ " :");
+//                        for(String me: temp.keySet()){
+//                            System.out.println(" +" + me);
+//                            for(String sender : temp.get(me))
+//                                System.out.println("   -" + sender);
+//                        }
                         oos.writeObject("Prepare for updating");
-//                        oos.writeObject(onlineList.get(this.nickName));
-                        oos.writeObject(onlineList);
+                        oos.writeObject(temp);
                     }finally{
                         read.unlock();
                     }

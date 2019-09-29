@@ -1,5 +1,7 @@
 package chatRoom_Executive;
 
+import chatRoom_Model.MessageMap;
+
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -13,7 +15,7 @@ public class ChatServer {
     private static boolean stopRequested;
     // Avoid problems like deadlock, conflict or starvation
 
-    public static HashMap<String, HashMap<String, Stack<String>>> onlineList = new HashMap<>();
+    public static HashMap<String, MessageMap> onlineList = new HashMap<>();
     /*
       use the Singleton to ensure the server could be at most one
       and just be used in package

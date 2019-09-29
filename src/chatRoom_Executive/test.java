@@ -1,7 +1,16 @@
 package chatRoom_Executive;
 
+import java.util.Stack;
+
 public class test {
     public static void main(String[] args) {
+        Stack<String> test = new Stack<>();
+        test.push("233");
+        test.push("asdfkjas");
+        for(String ad:test)
+            System.out.println(ad);
+//        new ChatClient().start();
+
 ////        String test = "233";
 //        HashMap<String, String> test = new HashMap<>();
 //        System.out.println(test.toString());
@@ -27,6 +36,5 @@ public class test {
 //        list.get("du").push("sadafd");
 //        System.out.println(list.get("du").peek());
 //        new Thread(new ChatClient()).start();
-        new ChatClient().start();
     }
 }

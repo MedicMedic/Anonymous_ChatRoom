@@ -1,6 +1,7 @@
 package chatRoom_Executive;
 
 import ChatRoom_Controller.ChatController;
+import chatRoom_Model.MessageMap;
 import chatRoom_View.ChatLogin;
 import chatRoom_View.ChatWindow;
 
@@ -14,7 +15,7 @@ public class ChatClient extends Thread  {
     private static final int HOST_PORT = 8888; // host port number
 
     // non-parameter constructor
-    ChatClient() {
+    private ChatClient() {
     }
 
     // thread start
@@ -46,12 +47,12 @@ public class ChatClient extends Thread  {
 
 
             // get the init inlineList
-            HashMap<String, Stack<String>> onlineList = (HashMap<String, Stack<String>>) ois.readObject();
+            MessageMap onlineList = (MessageMap) ois.readObject();
 
             // begin to chat
             boolean isStopped = false;
             ChatController windowControl = new  ChatController(new ChatWindow(nickName), nickName, onlineList, isStopped, oos, ois);
-//            windowControl.autoUpdateList();
+            windowControl.autoUpdateList();
             String response;
            while(!isStopped){
 //                   response = (String)ois.readObject();
@@ -77,7 +78,7 @@ public class ChatClient extends Thread  {
 //        new Thread(new ChatClient(), "Medic").start();
         new ChatClient().start();
         new ChatClient().start();
-        new ChatClient().start();
+//        new ChatClient().start();
 //        new Thread(new ChatClient()).start();
 //        new Thread(new ChatClient()).start();
     }
