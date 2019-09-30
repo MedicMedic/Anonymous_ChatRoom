@@ -2,12 +2,23 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4e5752f-ba00-4830-8163-0d239716d052" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/chatRoom_Model/FastGridBag.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatSeverSocket.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatSeverSocket.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_View/ChatLogin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_View/ChatLogin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_View/ChatWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_View/ChatWindow.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatRoom_Controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatRoom_Controller/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom_Executive/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_Executive/ChatClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom_Executive/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_Executive/ChatServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom_Executive/ChatSeverSocket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_Executive/ChatSeverSocket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom_Executive/test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_Executive/test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom_View/ChatLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_View/ChatLogin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/chatRoom_View/ChatWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_View/ChatWindow.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -41,6 +52,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="TODO_SCOPE" value="All Places" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -48,7 +60,14 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/src/resources" />
+      <recent name="$PROJECT_DIR$/src/chatRoom_View" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -62,7 +81,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ChatClient (1)">
+  <component name="RunManager" selected="Application.ChatWindow">
     <configuration name="ChatClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="chatRoom.ChatClient" />
       <module name="Assignment_ChatRoom" />
@@ -128,6 +147,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ChatWindow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="chatRoom_View.ChatWindow" />
+      <module name="Assignment_ChatRoom" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="chatRoom_View.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="chatRoom_Executive.test" />
       <module name="Assignment_ChatRoom" />
@@ -143,9 +175,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ChatClient (1)" />
-        <item itemvalue="Application.ChatServer" />
+        <item itemvalue="Application.ChatWindow" />
         <item itemvalue="Application.test" />
+        <item itemvalue="Application.ChatServer" />
         <item itemvalue="Application.ChatRoom_Login" />
         <item itemvalue="Application.ChatClient" />
       </list>
@@ -167,18 +199,10 @@
       <workItem from="1569375167561" duration="42061000" />
       <workItem from="1569541016464" duration="25891000" />
       <workItem from="1569595548141" duration="747000" />
-      <workItem from="1569741167515" duration="10627000" />
+      <workItem from="1569741167515" duration="11734000" />
+      <workItem from="1569809605319" duration="19731000" />
     </task>
     <servers />
-  </component>
-  <component name="TodoView">
-    <todo-panel id="selected-file">
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
-    <todo-panel id="all">
-      <are-packages-shown value="true" />
-      <is-autoscroll-to-source value="true" />
-    </todo-panel>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -199,10 +223,11 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/src/chatRoom_Executive/ChatSeverSocket.java</url>
-          <line>117</line>
-          <option name="timeStamp" value="40" />
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/chatRoom_View/ChatWindow.java</url>
+          <line>13</line>
+          <properties field="ois" class="chatRoom_View.ChatWindow" />
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>

@@ -15,7 +15,7 @@ public class ChatClient extends Thread  {
     private static final int HOST_PORT = 8888; // host port number
 
     // non-parameter constructor
-    private ChatClient() {
+    ChatClient() {
     }
 
     // thread start
@@ -48,14 +48,17 @@ public class ChatClient extends Thread  {
 
             // get the init inlineList
             MessageMap onlineList = (MessageMap) ois.readObject();
-
+            MessageMap myMessage = new MessageMap();
+            for(String sender : onlineList.keySet()){
+                myMessage.put(sender, new Stack<>());
+            }
             // begin to chat
             boolean isStopped = false;
-            ChatController windowControl = new  ChatController(new ChatWindow(nickName), nickName, onlineList, isStopped, oos, ois);
+            ChatController windowControl = new  ChatController(new ChatWindow(nickName), nickName, onlineList, myMessage, isStopped, oos, ois);
             windowControl.autoUpdateList();
             String response;
            while(!isStopped){
-//                   response = (String)ois.readObject();
+//               response = (String)ois.readObject();
 //               System.out.println(response);
 //               if(response.equals("terminate"))
 //                   break;
@@ -75,11 +78,8 @@ public class ChatClient extends Thread  {
 
     public static void main(String[] args) {
 
-//        new Thread(new ChatClient(), "Medic").start();
         new ChatClient().start();
         new ChatClient().start();
 //        new ChatClient().start();
-//        new Thread(new ChatClient()).start();
-//        new Thread(new ChatClient()).start();
     }
 }

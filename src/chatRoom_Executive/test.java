@@ -4,12 +4,12 @@ import java.util.Stack;
 
 public class test {
     public static void main(String[] args) {
-        Stack<String> test = new Stack<>();
-        test.push("233");
-        test.push("asdfkjas");
-        for(String ad:test)
-            System.out.println(ad);
-//        new ChatClient().start();
+//        Stack<String> test = new Stack<>();
+//        test.push("233");
+//        test.push("asdfkjas");
+//        for(String ad:test)
+//            System.out.println(ad);
+        new ChatClient().start();
 
 ////        String test = "233";
 //        HashMap<String, String> test = new HashMap<>();

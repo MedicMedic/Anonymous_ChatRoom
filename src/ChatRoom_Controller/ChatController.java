@@ -20,6 +20,7 @@ public class ChatController implements ActionListener {
     private ChatWindow chatWindow;
     private String nickName;
     private MessageMap onlineList;
+    private MessageMap myMessage;
 
     private boolean isStopped;
     private ObjectOutputStream oos;
@@ -42,10 +43,11 @@ public class ChatController implements ActionListener {
 
     // constructor for ChatWindow
     public ChatController(ChatWindow chatWindow, String nickName, MessageMap onlineList,
-                          boolean isStopped, ObjectOutputStream oos, ObjectInputStream ois) {
+                          MessageMap myMessage, boolean isStopped, ObjectOutputStream oos, ObjectInputStream ois) {
         this.chatWindow = chatWindow;
         this.nickName = nickName;
         this.onlineList = onlineList;
+        this.myMessage = myMessage;
         this.isStopped = isStopped;
         this.oos = oos;
         this.ois = ois;
@@ -77,13 +79,17 @@ public class ChatController implements ActionListener {
             MessageMap temp;
             temp = (MessageMap) (ois.readObject());
 
+            // Todo: update myMessageMap
             // update local onlineList
             for (String sender : temp.keySet()) {
                 if (!onlineList.containsKey(sender)) {
                     onlineList.put(sender, new Stack<String>());
+                    myMessage.put(sender, new Stack<String>());
                 }
-                while(!temp.get(sender).isEmpty())
+                while(!temp.get(sender).isEmpty()) {
                     onlineList.get(sender).push(temp.get(sender).pop());
+                    myMessage.get(sender).push(null);
+                }
             }
 
             // test
@@ -136,6 +142,8 @@ public class ChatController implements ActionListener {
             try {
                 oos.writeObject(this.chatWindow.getMsg());
                 System.out.println((String) ois.readObject());
+
+
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Exception occurs" + ex);
             }
@@ -148,23 +156,24 @@ public class ChatController implements ActionListener {
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Exception occurs: " + ex);
             }
-        } else if (e.getSource() == this.chatWindow.getShowMessage()) {
-
-            try {
-                oos.writeObject("show");
-                System.out.println((String) ois.readObject());
-            } catch (IOException | ClassNotFoundException ex) {
-                ex.printStackTrace();
-            }
-            System.out.println(this.nickName);
-            for (String sender : onlineList.keySet()) {
-                System.out.println("  +" + sender);
-                for (String message : onlineList.get(sender))
-                    System.out.println("    -" + message);
-            }
-        } else if (e.getSource() == this.chatWindow.getUpdateButton()) {
-            this.updateList();
         }
+//        else if (e.getSource() == this.chatWindow.getShowMessage()) {
+//
+//            try {
+//                oos.writeObject("show");
+//                System.out.println((String) ois.readObject());
+//            } catch (IOException | ClassNotFoundException ex) {
+//                ex.printStackTrace();
+//            }
+//            System.out.println(this.nickName);
+//            for (String sender : onlineList.keySet()) {
+//                System.out.println("  +" + sender);
+//                for (String message : onlineList.get(sender))
+//                    System.out.println("    -" + message);
+//            }
+//        } else if (e.getSource() == this.chatWindow.getUpdateButton()) {
+//            this.updateList();
+//        }
     }
 
 

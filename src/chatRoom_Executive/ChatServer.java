@@ -9,13 +9,13 @@ import java.util.*;
 public class ChatServer {
     // instance field
     // Constant
-    public static final int PORT = 8888;
+    private static final int PORT = 8888;
 
 
     private static boolean stopRequested;
     // Avoid problems like deadlock, conflict or starvation
 
-    public static HashMap<String, MessageMap> onlineList = new HashMap<>();
+    private static HashMap<String, MessageMap> onlineList = new HashMap<>();
     /*
       use the Singleton to ensure the server could be at most one
       and just be used in package

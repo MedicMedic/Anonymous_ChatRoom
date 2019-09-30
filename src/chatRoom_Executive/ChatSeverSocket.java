@@ -90,6 +90,8 @@ public class ChatSeverSocket implements Runnable {
 
             String target;
             String message;
+
+            // receive the commands from client
             do {
                 System.out.println("Waiting for client request");
 
@@ -149,18 +151,19 @@ public class ChatSeverSocket implements Runnable {
                     }
                 }
 //            for test
-                else if (clientRequest.equals("show")) {
-                    System.out.println("show");
-                    for (String test : onlineList.keySet()) {
-                        System.out.println("+" + test);
-                        for (String test2 : onlineList.get(test).keySet()) {
-                            System.out.println("  -" + test2);
-                            for(String msg : onlineList.get(test).get(test2))
-                                System.out.println("     ++" + msg);
-                        }
-                    }
-                    oos.writeObject("show message is received");
-                } else {
+//                else if (clientRequest.equals("show")) {
+//                    System.out.println("show");
+//                    for (String test : onlineList.keySet()) {
+//                        System.out.println("+" + test);
+//                        for (String test2 : onlineList.get(test).keySet()) {
+//                            System.out.println("  -" + test2);
+//                            for(String msg : onlineList.get(test).get(test2))
+//                                System.out.println("     ++" + msg);
+//                        }
+//                    }
+//                    oos.writeObject("show message is received");
+//                }
+                else {
 //                    pw.println("Unexpected client message");
                     oos.writeObject("Unexpected client message");
                 }

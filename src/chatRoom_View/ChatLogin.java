@@ -7,7 +7,7 @@ public class ChatLogin extends JFrame {
 
     private JButton login;
     private JTextField inputNickName;
-    private JTextField warning;
+    private JLabel warning;
     private boolean sign;
 
 
@@ -16,7 +16,7 @@ public class ChatLogin extends JFrame {
         this.setTitle("Login");
 
         // instance filed
-        JTextField heading = new JTextField("Anonymous Chat Room");
+        JLabel heading = new JLabel("Anonymous Chat Room");
         heading.setEnabled(false);
 
         heading.setHorizontalAlignment(JTextField.CENTER);
@@ -24,7 +24,7 @@ public class ChatLogin extends JFrame {
         inputNickName = new JTextField("nickName");
         inputNickName.setHorizontalAlignment(JTextField.CENTER);
 
-        warning = new JTextField(10);
+        warning = new JLabel();
 
         login = new JButton("login and Talk");
 
@@ -46,7 +46,7 @@ public class ChatLogin extends JFrame {
     public JButton getLoginButton(){
         return this.login;
     }
-    public JTextField getWarning(){
+    public JLabel getWarning(){
         return this.warning;
     }
 
