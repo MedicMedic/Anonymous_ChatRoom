@@ -79,6 +79,15 @@ public class ChatController implements ActionListener {
             MessageMap temp;
             temp = (MessageMap) (ois.readObject());
 
+            Stack<String> userStack = new Stack<>();
+            for(String user : onlineList.keySet()){
+                if(!temp.containsKey(user)){
+                    userStack.push(user);
+                }
+            }
+            for(String user : temp.keySet()){
+                userStack.push(user);
+            }
             // Todo: update myMessageMap
             // update local onlineList
             for (String sender : temp.keySet()) {
@@ -91,7 +100,11 @@ public class ChatController implements ActionListener {
                     myMessage.get(sender).push(null);
                 }
             }
-
+            if(!userStack.isEmpty()) {
+                System.out.println(userStack.size());
+                System.out.println("#########");
+                chatWindow.showMessageList(userStack);
+            }
             // test
             System.out.println(this.nickName);
             for (String sender : onlineList.keySet()) {
@@ -104,6 +117,7 @@ public class ChatController implements ActionListener {
 
         }
     }
+
 
 
 

@@ -12,7 +12,7 @@ import java.util.*;
 public class ChatClient extends Thread  {
 
     private static final String HOST_NAME = "localhost";
-    private static final int HOST_PORT = 8888; // host port number
+    private static final int HOST_PORT = 7777; // host port number
 
     // non-parameter constructor
     ChatClient() {
