@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d4e5752f-ba00-4830-8163-0d239716d052" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/chatRoom_Model/MessagePane.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chatRoom_Model/senderButton.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/chatRoom_View/TestWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/exit.png" beforeDir="false" afterPath="$PROJECT_DIR$/exit.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatServer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_View/ChatWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_View/ChatWindow.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ChatRoom_Controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatRoom_Controller/ChatController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chatRoom_Executive/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_Executive/ChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/chatRoom_Executive/ChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_Executive/ChatServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/chatRoom_View/ChatWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/chatRoom_View/ChatWindow.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -78,7 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.ChatTest">
+  <component name="RunManager" selected="Application.ChatClient">
     <configuration name="ChatClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="chatRoom_Executive.ChatClient" />
       <module name="Assignment_ChatRoom" />
@@ -172,10 +163,10 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ChatTest" />
         <item itemvalue="Application.ChatClient" />
         <item itemvalue="Application.ChatServer" />
         <item itemvalue="Application.ChatWindow" />
+        <item itemvalue="Application.ChatTest" />
         <item itemvalue="Application.testScroll" />
       </list>
     </recent_temporary>
@@ -200,7 +191,7 @@
       <workItem from="1569809605319" duration="23507000" />
       <workItem from="1569862255226" duration="43020000" />
       <workItem from="1570006396680" duration="35000" />
-      <workItem from="1570006527442" duration="18861000" />
+      <workItem from="1570006527442" duration="19648000" />
     </task>
     <servers />
   </component>

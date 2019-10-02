@@ -56,11 +56,11 @@ public class ChatController implements ActionListener {
         this.autoUpdate = new Timer();
 
 
-        this.chatWindow.getMsgButton().addActionListener(this);
+        this.chatWindow.getsendButton().addActionListener(this);
         this.chatWindow.getTerminate().addActionListener(this);
         // test
-        this.chatWindow.getShowMessage().addActionListener(this);
-        this.chatWindow.getUpdateButton().addActionListener(this);
+//        this.chatWindow.getShowMessage().addActionListener(this);
+//        this.chatWindow.getUpdateButton().addActionListener(this);
     }
 
     // for ChatLogin functions
@@ -152,9 +152,9 @@ public class ChatController implements ActionListener {
                 System.out.println("Exception occurs " + ex);
             }
 
-        } else if (e.getSource() == this.chatWindow.getMsgButton()) {
+        } else if (e.getSource() == this.chatWindow.getsendButton()) {
             try {
-                oos.writeObject(this.chatWindow.getMsg());
+//                oos.writeObject(this.chatWindow.getMsg());
                 System.out.println((String) ois.readObject());
 
 
