@@ -107,8 +107,8 @@ public class ChatTest extends JFrame {
 
     public void showMessage(){
         messageList.removeAll();
-        messageList.updateUI();
-        messageList.repaint();
+//        messageList.updateUI();
+//        messageList.repaint();
         for(int i = 0; i<2; i++)
             messageList.add(new MessagePane("ese"));
 

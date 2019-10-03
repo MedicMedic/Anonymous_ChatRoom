@@ -4,11 +4,13 @@ import chatRoom_Model.MessageMap;
 import chatRoom_View.ChatLogin;
 import chatRoom_View.ChatWindow;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,6 +28,7 @@ public class ChatController implements ActionListener {
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
 
+    private ArrayList<JButton> buttonList;
 
     private Timer autoUpdate;
 
@@ -51,7 +54,6 @@ public class ChatController implements ActionListener {
         this.isStopped = isStopped;
         this.oos = oos;
         this.ois = ois;
-
 
         this.autoUpdate = new Timer();
 
@@ -100,10 +102,12 @@ public class ChatController implements ActionListener {
                     myMessage.get(sender).push(null);
                 }
             }
+            // avoid errors from first client
             if(!userStack.isEmpty()) {
-                System.out.println(userStack.size());
-                System.out.println("#########");
-                chatWindow.showMessageList(userStack);
+                buttonList = chatWindow.showMessageList(userStack, onlineList);
+                for(JButton userButton : buttonList){
+                    userButton.addActionListener(this);
+                }
             }
             // test
             System.out.println(this.nickName);
@@ -170,6 +174,9 @@ public class ChatController implements ActionListener {
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Exception occurs: " + ex);
             }
+        } else{ // buttonList
+            JButton userButton = (JButton)e.getSource();
+
         }
 //        else if (e.getSource() == this.chatWindow.getShowMessage()) {
 //
@@ -177,7 +184,7 @@ public class ChatController implements ActionListener {
 //                oos.writeObject("show");
 //                System.out.println((String) ois.readObject());
 //            } catch (IOException | ClassNotFoundException ex) {
-//                ex.printStackTrace();
+
 //            }
 //            System.out.println(this.nickName);
 //            for (String sender : onlineList.keySet()) {

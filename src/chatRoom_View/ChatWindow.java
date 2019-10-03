@@ -11,19 +11,31 @@ import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class ChatWindow extends JFrame{
 //    private ObjectOutputStream oos;
 //    private ObjectInputStream ois;
+
+    // JComponent
+    Color[] nord;
     JButton terminate;
-    JPanel messageList;
     JButton sendButton;
+
+    JPanel messageList;
+    JPanel send;
+    JPanel receive;
+
+    // chat instance
+    String senderName;
+
     public ChatWindow(String nickName){
-        Color[] nord = new Color[3];
+        nord = new Color[4];
         nord[0] = new Color(48,55,87);
         nord[1] = new Color(29, 35, 65);
         nord[2] = new Color(109, 122, 145);
+        nord[3] = new Color(193, 206, 218);
 
         this.setLayout(new BorderLayout());
 
@@ -35,8 +47,8 @@ public class ChatWindow extends JFrame{
         JPanel quit=  new JPanel();quit.setPreferredSize(new Dimension(70,500));quit.setBackground(nord[0]);quit.setMinimumSize(new Dimension(70,500));
         messageList = new JPanel();
         messageList.setPreferredSize(new Dimension(260, 900));messageList.setBackground(nord[1]);
-        FlowLayout flow = new FlowLayout(FlowLayout.LEADING, 0, 0);
-        messageList.setLayout(flow);
+        FlowLayout flowLead = new FlowLayout(FlowLayout.LEADING, 0, 0);
+        messageList.setLayout(flowLead);
 //        messageList.setBorder(new EmptyBorder(-5, 0, -5, 0));
 
         fixed.setLayout(new BorderLayout());
@@ -63,12 +75,8 @@ public class ChatWindow extends JFrame{
         fixed.add(scroll);
         scroll.setBorder(new EmptyBorder(-5, 0, -5, 0));
 
-        for(int i = 0; i<15; i++) {
-            messageList.add(new MessagePane("test"));
-        }
-
-        JPanel history = new JPanel();history.setPreferredSize(new Dimension(330, 900));history.setBackground(nord[0]);
-        JPanel tempHis = new JPanel();tempHis.setPreferredSize(new Dimension(330, 900));tempHis.setBackground(nord[0]);
+        JPanel history = new JPanel();history.setPreferredSize(new Dimension(500, 740));history.setBackground(nord[0]);
+        JPanel tempHis = new JPanel();tempHis.setPreferredSize(new Dimension(500, 740));tempHis.setBackground(nord[0]);
         tempHis.setLayout(new BorderLayout());
         tempHis.add(history, BorderLayout.CENTER);
         JPanel text = new JPanel();text.setPreferredSize(new Dimension(500, 120));text.setBackground(nord[2]);
@@ -76,8 +84,9 @@ public class ChatWindow extends JFrame{
         chat.add(tempHis, BorderLayout.CENTER);
         chat.add(text, BorderLayout.SOUTH);
 
-        JPanel receive = new JPanel();receive.setBackground(Color.orange);
-        JPanel send = new JPanel();send.setBackground(Color.CYAN);
+        receive = new JPanel();receive.setBackground(Color.orange);receive.setLayout(flowLead);
+        FlowLayout flowTrail = new FlowLayout(FlowLayout.TRAILING, 0, 0);
+        send = new JPanel();send.setBackground(Color.CYAN);send.setLayout(flowTrail);
         history.setLayout(new GridLayout(1,2));
         history.add(receive);
         history.add(send);
@@ -101,7 +110,7 @@ public class ChatWindow extends JFrame{
         textPanel.add(textArea, BorderLayout.CENTER);
 
         sendButton = new JButton("send");
-        sendButton.setBackground(new Color(193, 206, 218));
+        sendButton.setBackground(nord[3]);
         sendButton.setOpaque(true);
         sendButton.setBorderPainted(false);
         sendPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -122,6 +131,62 @@ public class ChatWindow extends JFrame{
     public JButton getTerminate(){
         return this.terminate;
     }
+    public String setSenderName(){
+        return senderName;
+    }
+    public void showHistory(Stack<String>sendMessageList, Stack<String>receiveMessageList){
+        this.send.removeAll();
+        this.receive.removeAll();
+
+        for(String sendMessage : sendMessageList){
+            if(sendMessage == null){
+                JPanel blank = new JPanel();
+                blank.setPreferredSize(new Dimension(250, 24));
+                blank.setBackground(nord[0]);
+                send.add(blank);
+            }
+            else{
+                send.add(new MessagePane(sendMessage, 0));
+            }
+        }
+        for(String receiveMessage : receiveMessageList){
+            if(receiveMessage == null){
+                JPanel blank = new JPanel();
+                blank.setPreferredSize(new Dimension(250, 24));
+                blank.setBackground(nord[0]);
+                send.add(blank);
+            }
+            else{
+                receive.add(new MessagePane(receiveMessage, 0));
+            }
+        }
+
+    }
+
+
+
+    public ArrayList<JButton> showMessageList(Stack<String> userStack, MessageMap onlinList){
+        messageList.removeAll();
+        ArrayList<JButton> buttonList = new ArrayList<>();
+//        messageList.updateUI();
+//        messageList.repaint();
+        for(String user : userStack){
+            MessagePane messagePane;
+            if(onlinList.get(user).isEmpty()) {
+                messagePane = new MessagePane(user);
+                messageList.add(messagePane);
+            }
+            else {
+                messagePane = new MessagePane(user + ": " + onlinList.get(user).peek());
+                messageList.add(messagePane);
+            }
+            buttonList.add(messagePane.getMessageButton());
+        }
+        messageList.revalidate();
+        return buttonList;
+
+    }
+
 //    public String getMsg(){
 //        return "Msg "+this.msg.getText();
 //    }
@@ -136,27 +201,6 @@ public class ChatWindow extends JFrame{
 //    public Stack<JButton> getMessageButtonList(){
 //        return this.messageButtonList;
 //    }
-
-
-    public void showMessageList(Stack<String> userStack){
-//        JPanel temp = new JPanel();temp.setPreferredSize(new Dimension(260, 500));
-//        temp.setBackground(Color.orange);
-//        // show auto-updating userList
-//        FlowLayout flow = new FlowLayout(FlowLayout.LEADING, 0, -6);
-//        temp.setLayout(flow);
-//        temp.setBorder(new EmptyBorder(-5, 0, -5, 0));
-//        JScrollPane scroll = new JScrollPane();
-//        scroll.setViewportView(temp);
-//        System.out.println("@@@@@@@@@@@");
-//        for(String user : userStack){
-//            MessagePane mp = new MessagePane(user);
-//            temp.add(new JButton("dalksfjl"));
-//            fixed.add(temp, BorderLayout.EAST);
-//        }
-
-    }
-
-
 //    private GridBagConstraints fastGridBag(GridBagConstraints gbc, int gridx, int gridy, int gridwidth, int gridheight,
 //                        double weightx, double weighty, int fill){
 //        gbc.gridx = gridx;

@@ -1,5 +1,8 @@
 package chatRoom_Executive;
 
+import chatRoom_Model.MessageMap;
+import chatRoom_Model.MessagePane;
+
 import java.util.Stack;
 
 public class test {
@@ -9,7 +12,7 @@ public class test {
 //        test.push("asdfkjas");
 //        for(String ad:test)
 //            System.out.println(ad);
-        new ChatClient().start();
+//        new ChatClient().start();
 
 ////        String test = "233";
 //        HashMap<String, String> test = new HashMap<>();
@@ -36,5 +39,20 @@ public class test {
 //        list.get("du").push("sadafd");
 //        System.out.println(list.get("du").peek());
 //        new Thread(new ChatClient()).start();
+
+
+        MessageMap test = new MessageMap();
+        test.put("2", new Stack<>());
+        test.get("2").push("adlskf");
+        test.get("2").push("23432424");
+        test.get("2").push("e23flkcvx");
+
+        de(test.get("2"));
+        System.out.println("The size is" + test.get("2").size());
+    }
+    public static void de(Stack<String> stack){
+        while(!stack.isEmpty()){
+            System.out.println(stack.pop());
+        }
     }
 }
