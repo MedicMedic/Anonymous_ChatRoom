@@ -19,18 +19,20 @@ public class ChatWindow extends JFrame{
 //    private ObjectInputStream ois;
 
     // JComponent
-    Color[] nord;
-    JButton terminate;
-    JButton sendButton;
+    private Color[] nord;
+    private JButton terminate;
+    private JButton sendButton;
 
-    JPanel messageList;
-    JPanel send;
-    JPanel receive;
+    private JPanel messageList;
+    private JPanel send;
+    private JPanel receive;
 
+    private JTextArea textArea;
     // chat instance
-    String senderName;
-
+    private String nickName;
     public ChatWindow(String nickName){
+
+        this.nickName = nickName;
         nord = new Color[4];
         nord[0] = new Color(48,55,87);
         nord[1] = new Color(29, 35, 65);
@@ -84,12 +86,18 @@ public class ChatWindow extends JFrame{
         chat.add(tempHis, BorderLayout.CENTER);
         chat.add(text, BorderLayout.SOUTH);
 
-        receive = new JPanel();receive.setBackground(Color.orange);receive.setLayout(flowLead);
+        receive = new JPanel();receive.setBackground(nord[0]);receive.setLayout(flowLead);
         FlowLayout flowTrail = new FlowLayout(FlowLayout.TRAILING, 0, 0);
-        send = new JPanel();send.setBackground(Color.CYAN);send.setLayout(flowTrail);
+        send = new JPanel();send.setBackground(nord[0]);send.setLayout(flowTrail);
+
         history.setLayout(new GridLayout(1,2));
         history.add(receive);
         history.add(send);
+
+//        for(int i = 0; i<10; i++){
+//            send.add(new MessagePane("233iasdlfffffjalsdfjlasdfjalsdjflasdfjlasdjfkasdf", 0));
+//            receive.add(new MessagePane("baba", 1));
+//        }
 
         JScrollPane historyScroll = new JScrollPane();
         historyScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -104,7 +112,7 @@ public class ChatWindow extends JFrame{
         text.add(textPanel, BorderLayout.CENTER);
         text.add(sendPanel, BorderLayout.SOUTH);
 
-        JTextArea textArea = new JTextArea();textArea.setPreferredSize(new Dimension(500,90)); textArea.setBackground(nord[2]);
+        textArea = new JTextArea();textArea.setPreferredSize(new Dimension(500,90)); textArea.setBackground(nord[2]);
         textArea.setLineWrap(true);
         textPanel.setLayout(new BorderLayout());
         textPanel.add(textArea, BorderLayout.CENTER);
@@ -120,6 +128,7 @@ public class ChatWindow extends JFrame{
         this.pack();
         this.setBounds(350,170, 830, 500);
         this.setMinimumSize(new Dimension(830, 500));
+        this.setTitle(this.nickName);
         this.setVisible(true);
         this.setDefaultCloseOperation(new JFrame().EXIT_ON_CLOSE);
 
@@ -131,45 +140,57 @@ public class ChatWindow extends JFrame{
     public JButton getTerminate(){
         return this.terminate;
     }
-    public String setSenderName(){
-        return senderName;
+
+    public String getMsg(){
+        return this.textArea.getText();
     }
+    public void setTextArea(){
+        this.textArea.setText("");
+    }
+
     public void showHistory(Stack<String>sendMessageList, Stack<String>receiveMessageList){
         this.send.removeAll();
         this.receive.removeAll();
 
-        for(String sendMessage : sendMessageList){
-            if(sendMessage == null){
-                JPanel blank = new JPanel();
-                blank.setPreferredSize(new Dimension(250, 24));
-                blank.setBackground(nord[0]);
-                send.add(blank);
-            }
-            else{
-                send.add(new MessagePane(sendMessage, 0));
-            }
+        if(sendMessageList.isEmpty() && receiveMessageList.isEmpty()){
+            send.revalidate();
+            receive.revalidate();
         }
-        for(String receiveMessage : receiveMessageList){
-            if(receiveMessage == null){
-                JPanel blank = new JPanel();
-                blank.setPreferredSize(new Dimension(250, 24));
-                blank.setBackground(nord[0]);
-                send.add(blank);
+        else {
+            for (String sendMessage : sendMessageList) {
+                if (sendMessage == null) {
+                    JPanel blank = new JPanel();
+                    blank.setPreferredSize(new Dimension(250, 24));
+                    blank.setBackground(nord[0]);
+                    send.add(blank);
+                } else {
+                    send.add(new MessagePane(sendMessage, 0));
+                }
             }
-            else{
-                receive.add(new MessagePane(receiveMessage, 0));
+            for (String receiveMessage : receiveMessageList) {
+                if (receiveMessage == null) {
+                    JPanel blank = new JPanel();
+                    blank.setPreferredSize(new Dimension(250, 24));
+                    blank.setBackground(nord[0]);
+                    receive.add(blank);
+                } else {
+                    receive.add(new MessagePane(receiveMessage, 1));
+                }
             }
+            send.revalidate();
+            receive.revalidate();
         }
 
     }
 
 
 
-    public ArrayList<JButton> showMessageList(Stack<String> userStack, MessageMap onlinList){
+    public ArrayList<MessagePane> showMessageList(Stack<String> userStack, MessageMap onlinList, MessageMap myMessage){
         messageList.removeAll();
-        ArrayList<JButton> buttonList = new ArrayList<>();
+        ArrayList<MessagePane> messagePaneList = new ArrayList<>();
 //        messageList.updateUI();
 //        messageList.repaint();
+
         for(String user : userStack){
             MessagePane messagePane;
             if(onlinList.get(user).isEmpty()) {
@@ -177,19 +198,27 @@ public class ChatWindow extends JFrame{
                 messageList.add(messagePane);
             }
             else {
-                messagePane = new MessagePane(user + ": " + onlinList.get(user).peek());
+                String latestMessage;
+
+                if(onlinList.get(user).peek() != null){
+                    latestMessage = user + " says: " + onlinList.get(user).peek();
+                }
+                else{
+                    latestMessage = user + " " + myMessage.get(user).peek();
+                }
+                messagePane = new MessagePane(latestMessage);
                 messageList.add(messagePane);
             }
-            buttonList.add(messagePane.getMessageButton());
+            messagePane.setUserName(user);
+            messagePaneList.add(messagePane);
+
         }
         messageList.revalidate();
-        return buttonList;
+        return messagePaneList;
 
     }
 
-//    public String getMsg(){
-//        return "Msg "+this.msg.getText();
-//    }
+
 
     // test
 //    public JButton getShowMessage(){

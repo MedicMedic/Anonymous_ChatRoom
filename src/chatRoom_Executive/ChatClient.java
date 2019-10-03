@@ -80,7 +80,7 @@ public class ChatClient extends Thread  {
 
         new ChatClient().start();
         new ChatClient().start();
-        new ChatClient().start();
+//        new ChatClient().start();
 //        new ChatClient().start();
     }
 }

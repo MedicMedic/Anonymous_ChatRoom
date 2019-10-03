@@ -1,6 +1,7 @@
 package ChatRoom_Controller;
 
 import chatRoom_Model.MessageMap;
+import chatRoom_Model.MessagePane;
 import chatRoom_View.ChatLogin;
 import chatRoom_View.ChatWindow;
 
@@ -28,11 +29,12 @@ public class ChatController implements ActionListener {
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
 
-    private ArrayList<JButton> buttonList;
-
+    private ArrayList<MessagePane> messagePaneList;
+    private String senderName;
     private Timer autoUpdate;
 
-
+    Stack<String> sendMessageList;
+    Stack<String> receiveMessageList;
     // constructors
 
     // constructor for ChatLogin
@@ -104,9 +106,9 @@ public class ChatController implements ActionListener {
             }
             // avoid errors from first client
             if(!userStack.isEmpty()) {
-                buttonList = chatWindow.showMessageList(userStack, onlineList);
-                for(JButton userButton : buttonList){
-                    userButton.addActionListener(this);
+                messagePaneList = chatWindow.showMessageList(userStack, onlineList, myMessage);
+                for(MessagePane messagePane: messagePaneList){
+                    messagePane.getMessageButton().addActionListener(this);
                 }
             }
             // test
@@ -116,6 +118,7 @@ public class ChatController implements ActionListener {
                 for (String message : onlineList.get(sender))
                     System.out.println(message);
             }
+            updateHistory();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Exception occurs " + e);
 
@@ -135,6 +138,24 @@ public class ChatController implements ActionListener {
         }, 1000, 5000);
     }
 
+    private void updateHistory(){
+        System.out.println("##########");
+        System.out.println(senderName);
+        sendMessageList = new Stack<>();
+        receiveMessageList = new Stack<>();
+        System.out.println(onlineList.values().isEmpty());
+        if(senderName != null) {
+            if (!onlineList.get(senderName).isEmpty()) {
+                for (String receiveMessage : onlineList.get(senderName))
+                    receiveMessageList.push(receiveMessage);
+            }
+            if (!myMessage.get(senderName).isEmpty()) {
+                for (String sendMessage : myMessage.get(senderName))
+                    sendMessageList.push(sendMessage);
+            }
+            this.chatWindow.showHistory(sendMessageList, receiveMessageList);
+        }
+    }
     // one for all controller actionListener
     public void actionPerformed(ActionEvent e) {
         if (this.chatLogin != null) {
@@ -158,9 +179,13 @@ public class ChatController implements ActionListener {
 
         } else if (e.getSource() == this.chatWindow.getsendButton()) {
             try {
-//                oos.writeObject(this.chatWindow.getMsg());
+                oos.writeObject("Msg " + this.senderName + " " +this.chatWindow.getMsg());
+                myMessage.get(senderName).push(this.chatWindow.getMsg());
+                onlineList.get(senderName).push(null);
+                this.chatWindow.setTextArea();
                 System.out.println((String) ois.readObject());
 
+                updateHistory();
 
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Exception occurs" + ex);
@@ -176,8 +201,15 @@ public class ChatController implements ActionListener {
             }
         } else{ // buttonList
             JButton userButton = (JButton)e.getSource();
+            for(MessagePane messagePane : messagePaneList){
+                if(messagePane.getMessageButton().getText().equals(userButton.getText())){
+                    this.senderName = messagePane.getUserName();
+                }
+            }
 
+            updateHistory();
         }
+
 //        else if (e.getSource() == this.chatWindow.getShowMessage()) {
 //
 //            try {

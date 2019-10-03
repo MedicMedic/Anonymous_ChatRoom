@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class MessagePane extends JPanel {
     private JButton messageButton;
+    private String userName;
     Color[] nord;
     {
         nord = new Color[4];
@@ -22,14 +23,18 @@ public class MessagePane extends JPanel {
 
         this.setLayout(new GridLayout(1, 1));
         JLabel message = new JLabel(SRMessage);
+        message.setPreferredSize(new Dimension(250,24));
 
         if(LR == 1){
             message.setHorizontalAlignment(JTextField.LEFT);
             message.setBackground(nord[3]);
+            message.setOpaque(true);
+
             this.add(message);
         }else{
             message.setHorizontalAlignment(JTextField.RIGHT);
             message.setBackground(nord[2]);
+            message.setOpaque(true);
             this.add(message);
         }
     }
@@ -50,5 +55,11 @@ public class MessagePane extends JPanel {
 
     public JButton getMessageButton() {
         return messageButton;
+    }
+    public String getUserName(){
+        return this.userName;
+    }
+    public void setUserName(String userName){
+        this.userName = userName;
     }
 }
