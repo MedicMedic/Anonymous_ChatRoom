@@ -201,34 +201,15 @@ public class ChatController implements ActionListener {
             }
         } else{ // buttonList
             JButton userButton = (JButton)e.getSource();
+            this.chatWindow.clearHisotry();
             for(MessagePane messagePane : messagePaneList){
+                // find the sender from onlineList
                 if(messagePane.getMessageButton().getText().equals(userButton.getText())){
                     this.senderName = messagePane.getUserName();
                 }
             }
-
             updateHistory();
         }
-
-//        else if (e.getSource() == this.chatWindow.getShowMessage()) {
-//
-//            try {
-//                oos.writeObject("show");
-//                System.out.println((String) ois.readObject());
-//            } catch (IOException | ClassNotFoundException ex) {
-
-//            }
-//            System.out.println(this.nickName);
-//            for (String sender : onlineList.keySet()) {
-//                System.out.println("  +" + sender);
-//                for (String message : onlineList.get(sender))
-//                    System.out.println("    -" + message);
-//            }
-//        } else if (e.getSource() == this.chatWindow.getUpdateButton()) {
-//            this.updateList();
-//        }
     }
-
-
 }
 

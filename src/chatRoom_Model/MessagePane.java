@@ -17,7 +17,7 @@ public class MessagePane extends JPanel {
         nord[2] = new Color(109, 122, 145);
         nord[3] = new Color(193, 206, 218);
     }
-    public MessagePane(String SRMessage, int LR){
+    public MessagePane(String SRMessage, int SR){
         this.setPreferredSize(new Dimension(250,24));
         this.setBackground(nord[0]);
 
@@ -25,14 +25,14 @@ public class MessagePane extends JPanel {
         JLabel message = new JLabel(SRMessage);
         message.setPreferredSize(new Dimension(250,24));
 
-        if(LR == 1){
+        if(SR == 1){
             message.setHorizontalAlignment(JTextField.LEFT);
             message.setBackground(nord[3]);
             message.setOpaque(true);
 
             this.add(message);
         }else{
-            message.setHorizontalAlignment(JTextField.RIGHT);
+            message.setHorizontalAlignment(JTextField.LEFT);
             message.setBackground(nord[2]);
             message.setOpaque(true);
             this.add(message);

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d4e5752f-ba00-4830-8163-0d239716d052" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/ChatRoom_Controller/ChatController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Executive/ChatClient.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Model/MessagePane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assignment_ChatRoom/chatRoom_Model/MessagePane.class" afterDir="false" />
@@ -199,7 +198,7 @@
       <workItem from="1570006527442" duration="19648000" />
       <workItem from="1570037098075" duration="2356000" />
       <workItem from="1570068128613" duration="8551000" />
-      <workItem from="1570076927095" duration="10977000" />
+      <workItem from="1570076927095" duration="17705000" />
     </task>
     <servers />
   </component>
@@ -221,6 +220,13 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ChatRoom_Controller/ChatController.java</url>
+          <line>202</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
       <breakpoints-defaults>
         <breakpoint suspend="THREAD" type="java-line" />
       </breakpoints-defaults>

@@ -28,11 +28,10 @@ public class ChatWindow extends JFrame{
     private JPanel receive;
 
     private JTextArea textArea;
-    // chat instance
-    private String nickName;
+
     public ChatWindow(String nickName){
 
-        this.nickName = nickName;
+        // chat instance
         nord = new Color[4];
         nord[0] = new Color(48,55,87);
         nord[1] = new Color(29, 35, 65);
@@ -86,16 +85,17 @@ public class ChatWindow extends JFrame{
         chat.add(tempHis, BorderLayout.CENTER);
         chat.add(text, BorderLayout.SOUTH);
 
-        receive = new JPanel();receive.setBackground(nord[0]);receive.setLayout(flowLead);
+        receive = new JPanel();receive.setBackground(nord[0]);receive.setLayout(flowLead);receive.setPreferredSize(new Dimension(250, 0));
         FlowLayout flowTrail = new FlowLayout(FlowLayout.TRAILING, 0, 0);
-        send = new JPanel();send.setBackground(nord[0]);send.setLayout(flowTrail);
+        send = new JPanel();send.setBackground(nord[0]);send.setLayout(flowTrail);send.setPreferredSize(new Dimension(250, 0));
 
-        history.setLayout(new GridLayout(1,2));
-        history.add(receive);
-        history.add(send);
-
+//        history.setLayout(new GridLayout(1,2));
+        history.setLayout(new BorderLayout());
+        history.add(receive, BorderLayout.WEST);
+        history.add(send, BorderLayout.EAST);
+//        history.setBorder(new EmptyBorder(-5, 0, -5, 0));
 //        for(int i = 0; i<10; i++){
-//            send.add(new MessagePane("233iasdlfffffjalsdfjlasdfjalsdjflasdfjlasdjfkasdf", 0));
+//            send.add(new MessagePane("233", 1));
 //            receive.add(new MessagePane("baba", 1));
 //        }
 
@@ -128,7 +128,7 @@ public class ChatWindow extends JFrame{
         this.pack();
         this.setBounds(350,170, 830, 500);
         this.setMinimumSize(new Dimension(830, 500));
-        this.setTitle(this.nickName);
+        this.setTitle("Welcome " + nickName);
         this.setVisible(true);
         this.setDefaultCloseOperation(new JFrame().EXIT_ON_CLOSE);
 
@@ -148,13 +148,22 @@ public class ChatWindow extends JFrame{
         this.textArea.setText("");
     }
 
+    public void clearHisotry(){
+        this.send.removeAll();
+        this.receive.removeAll();
+        this.send.revalidate();
+        this.receive.revalidate();
+    }
     public void showHistory(Stack<String>sendMessageList, Stack<String>receiveMessageList){
         this.send.removeAll();
         this.receive.removeAll();
-
+//        send.revalidate();
+//        receive.revalidate();
         if(sendMessageList.isEmpty() && receiveMessageList.isEmpty()){
-            send.revalidate();
-            receive.revalidate();
+            this.send.revalidate();
+            this.receive.revalidate();
+            this.send.repaint();
+            this.receive.repaint();
         }
         else {
             for (String sendMessage : sendMessageList) {
@@ -177,8 +186,10 @@ public class ChatWindow extends JFrame{
                     receive.add(new MessagePane(receiveMessage, 1));
                 }
             }
-            send.revalidate();
-            receive.revalidate();
+            this.send.revalidate();
+            this.receive.revalidate();
+            this.send.repaint();
+            this.receive.repaint();
         }
 
     }
