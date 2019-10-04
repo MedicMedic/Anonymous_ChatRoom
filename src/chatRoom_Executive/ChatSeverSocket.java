@@ -14,7 +14,7 @@ public class ChatSeverSocket implements Runnable {
     private String nickName;
     private Socket socket;
     private static HashMap<String, MessageMap> onlineList;
-
+    private static HashMap<String, HashMap<String, MessageMap>> on
 
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -150,19 +150,6 @@ public class ChatSeverSocket implements Runnable {
                         write.unlock();
                     }
                 }
-//            for test
-//                else if (clientRequest.equals("show")) {
-//                    System.out.println("show");
-//                    for (String test : onlineList.keySet()) {
-//                        System.out.println("+" + test);
-//                        for (String test2 : onlineList.get(test).keySet()) {
-//                            System.out.println("  -" + test2);
-//                            for(String msg : onlineList.get(test).get(test2))
-//                                System.out.println("     ++" + msg);
-//                        }
-//                    }
-//                    oos.writeObject("show message is received");
-//                }
                 else {
 //                    pw.println("Unexpected client message");
                     oos.writeObject("Unexpected client message");
