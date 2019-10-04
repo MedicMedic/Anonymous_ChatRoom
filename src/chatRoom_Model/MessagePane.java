@@ -1,7 +1,5 @@
 package chatRoom_Model;
 
-import chatRoom_View.ChatWindow;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -47,9 +45,7 @@ public class MessagePane extends JPanel {
         messageButton = new JButton(userName);
         messageButton.setHorizontalAlignment(JTextField.LEFT);
         messageButton.setBorder(BorderFactory.createLineBorder(nord[1]));
-//        messageButton.setOpaque(true);
-//        messageButton.setBorderPainted(false);
-//        messageButton.setBorder(BorderFactory.createLineBorder(new Color(48,55,87)));
+
         this.add(messageButton);
     }
 

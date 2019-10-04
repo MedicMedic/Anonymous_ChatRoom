@@ -117,8 +117,4 @@ public class ChatLogin extends JFrame {
         return this.group;
     }
 
-    public static void main(String[] args) {
-        new ChatLogin();
-    }
-
 }

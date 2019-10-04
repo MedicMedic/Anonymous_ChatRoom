@@ -1,16 +1,11 @@
 package chatRoom_View;
 
-import chatRoom_Model.FastGridBag;
 import chatRoom_Model.MessageMap;
 import chatRoom_Model.MessagePane;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -138,13 +133,7 @@ public class ChatWindow extends JFrame{
         this.setBounds(350,170, 830, 500);
         this.setMinimumSize(new Dimension(830, 500));
         this.setTitle("Welcome " + nickName);
-        this.setVisible(true);
-        this.setDefaultCloseOperation(new JFrame().DO_NOTHING_ON_CLOSE);
-
-    }
-
-    public JButton getsendButton(){
-        return this.sendButton;
+        this.setVisible(true); this.setDefaultCloseOperation(new JFrame().DO_NOTHING_ON_CLOSE); } public JButton getsendButton(){ return this.sendButton;
     }
     public JButton getTerminate(){
         return this.terminate;
@@ -162,12 +151,6 @@ public class ChatWindow extends JFrame{
         senderLabel.setForeground(nord[3]);
     }
 
-//    public void clearHisotry(){
-//        this.send.removeAll();
-//        this.receive.removeAll();
-//        this.send.revalidate();
-//        this.receive.revalidate();
-//    }
     public void showHistory(Stack<String>sendMessageList, Stack<String>receiveMessageList){
         this.send.removeAll();
         this.receive.removeAll();
@@ -239,36 +222,10 @@ public class ChatWindow extends JFrame{
 
         }
         messageList.revalidate();
+        messageList.repaint();
         return messagePaneList;
 
     }
 
 
-
-    // test
-//    public JButton getShowMessage(){
-//        return this.showMessage;
-//    }
-//    public JButton getUpdateButton(){
-//        return this.updateButton;
-//    }
-//    public Stack<JButton> getMessageButtonList(){
-//        return this.messageButtonList;
-//    }
-//    private GridBagConstraints fastGridBag(GridBagConstraints gbc, int gridx, int gridy, int gridwidth, int gridheight,
-//                        double weightx, double weighty, int fill){
-//        gbc.gridx = gridx;
-//        gbc.gridy = gridy;
-//        gbc.gridwidth = gridwidth;
-//        gbc.gridheight = gridheight;
-//        gbc.weightx = weightx;
-//        gbc.weighty = weighty;
-//        gbc.fill = fill;
-//
-//        return gbc;
-//    }
-
-    public static void main(String[] args) {
-        new ChatWindow("23e");
-    }
 }

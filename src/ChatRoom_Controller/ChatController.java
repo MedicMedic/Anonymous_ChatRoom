@@ -1,18 +1,18 @@
 package ChatRoom_Controller;
 
-import chatRoom_Executive.ChatClient;
-import chatRoom_Model.MessageMap;
-import chatRoom_Model.MessagePane;
+import chatRoom_Model.ChatClient;
+import chatRoom_Model.*;
 import chatRoom_View.ChatLogin;
 import chatRoom_View.ChatWindow;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.DatagramSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Timer;
@@ -31,12 +31,16 @@ public class ChatController implements ActionListener {
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
     private ChatClient client;
+    private Socket socket;
 
     private ArrayList<MessagePane> messagePaneList;
     private String senderName;
     private Timer autoUpdate;
+    private String latestDisconnection;
+    private String localLatestDisconnection;
+    private UdpReceiver udpReceiver;
 
-
+    private  static DatagramSocket clientUdp;
     // constructors
 
     // constructor for ChatLogin
@@ -50,7 +54,7 @@ public class ChatController implements ActionListener {
 
     // constructor for ChatWindow
     public ChatController(ChatWindow chatWindow, String nickName, String groupName, MessageMap onlineList,
-                          MessageMap myMessage, ObjectOutputStream oos, ObjectInputStream ois, ChatClient client) {
+                          MessageMap myMessage, ObjectOutputStream oos, ObjectInputStream ois, ChatClient client, Socket socket, int your_Port) {
         this.chatWindow = chatWindow;
         this.nickName = nickName;
         this.groupName = groupName;
@@ -65,9 +69,10 @@ public class ChatController implements ActionListener {
 
         this.chatWindow.getsendButton().addActionListener(this);
         this.chatWindow.getTerminate().addActionListener(this);
-        // test
-//        this.chatWindow.getShowMessage().addActionListener(this);
-//        this.chatWindow.getUpdateButton().addActionListener(this);
+
+         udpReceiver = new UdpReceiver(chatWindow, client, autoUpdate, your_Port, oos);
+         udpReceiver.start();
+
     }
 
     // for ChatLogin functions
@@ -89,6 +94,24 @@ public class ChatController implements ActionListener {
             MessageMap temp;
             temp = (MessageMap) (ois.readObject());
 
+            latestDisconnection = (String)(ois.readObject());
+
+           if(!this.onlineList.containsKey(latestDisconnection)){
+               latestDisconnection = null;
+           }
+            if(latestDisconnection != null) {
+                this.chatWindow.getsendButton().setEnabled(false);
+
+
+                if (this.onlineList.containsKey(latestDisconnection)) {
+                    onlineList.remove(latestDisconnection);
+                    temp.remove(latestDisconnection);
+                    JOptionPane.showMessageDialog(this.chatWindow, latestDisconnection + " has disconnected", "Notice",JOptionPane.WARNING_MESSAGE);
+                    if(latestDisconnection.equals(senderName)){
+                        senderName = null;
+                    }
+                }
+            }
             Stack<String> userStack = new Stack<>();
             for(String user : onlineList.keySet()){
                 if(!temp.containsKey(user)){
@@ -117,14 +140,7 @@ public class ChatController implements ActionListener {
                     messagePane.getMessageButton().addActionListener(this);
                 }
             }
-            // test
-            System.out.println(this.nickName);
-            for (String sender : onlineList.keySet()) {
-                System.out.println("  +" + sender);
-                for (String message : onlineList.get(sender))
-                    System.out.println(message);
-            }
-            updateHistory();
+                updateHistory();
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Exception occurs " + e);
 
@@ -145,22 +161,23 @@ public class ChatController implements ActionListener {
     }
 
     private void updateHistory(){
-        System.out.println("##########");
-        System.out.println(senderName);
-        Stack<String> sendMessageList = new Stack<>();
-        Stack<String> receiveMessageList = new Stack<>();
-        System.out.println(onlineList.values().isEmpty());
-        if(senderName != null) {
-            this.chatWindow.setSenderLabel(this.groupName + ": " + senderName);
-            if (!onlineList.get(senderName).isEmpty()) {
-                for (String receiveMessage : onlineList.get(senderName))
-                    receiveMessageList.push(receiveMessage);
+        if(latestDisconnection != senderName) {
+            Stack<String> sendMessageList = new Stack<>();
+            Stack<String> receiveMessageList = new Stack<>();
+            if (senderName != null) {
+                this.chatWindow.setSenderLabel(this.groupName + "(" + onlineList.keySet().size() +")" + ": " + senderName);
+                if (!onlineList.get(senderName).isEmpty()) {
+                    for (String receiveMessage : onlineList.get(senderName))
+                        receiveMessageList.push(receiveMessage);
+                }
+                if (!myMessage.get(senderName).isEmpty()) {
+                    for (String sendMessage : myMessage.get(senderName))
+                        sendMessageList.push(sendMessage);
+                }
+                this.chatWindow.showHistory(sendMessageList, receiveMessageList);
+            }else{
+                this.chatWindow.setSenderLabel(this.groupName + "(" + onlineList.keySet().size() +")");
             }
-            if (!myMessage.get(senderName).isEmpty()) {
-                for (String sendMessage : myMessage.get(senderName))
-                    sendMessageList.push(sendMessage);
-            }
-            this.chatWindow.showHistory(sendMessageList, receiveMessageList);
         }
     }
     // one for all controller actionListener
@@ -195,6 +212,7 @@ public class ChatController implements ActionListener {
                 this.chatWindow.setTextArea();
                 System.out.println((String) ois.readObject());
 
+
                 updateHistory();
 
             } catch (IOException | ClassNotFoundException ex) {
@@ -203,11 +221,13 @@ public class ChatController implements ActionListener {
         } else if (e.getSource() == this.chatWindow.getTerminate()) {
             try {
                 oos.writeObject("terminate");
+                oos.writeObject(this.nickName);
                 System.out.println((String) ois.readObject());
                 this.oos.close();
                 this.ois.close();
                 this.chatWindow.dispose();
                 this.autoUpdate.cancel();
+                this.udpReceiver.getUdpSocket().close();
                 this.client.isStopped = true;
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Exception occurs: " + ex);
@@ -225,5 +245,6 @@ public class ChatController implements ActionListener {
             updateHistory();
         }
     }
+
 }
 
