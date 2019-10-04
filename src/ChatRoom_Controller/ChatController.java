@@ -24,6 +24,7 @@ public class ChatController implements ActionListener {
 
     private ChatWindow chatWindow;
     private String nickName;
+    private String groupName;
     private MessageMap onlineList;
     private MessageMap myMessage;
 
@@ -48,10 +49,11 @@ public class ChatController implements ActionListener {
     }
 
     // constructor for ChatWindow
-    public ChatController(ChatWindow chatWindow, String nickName, MessageMap onlineList,
+    public ChatController(ChatWindow chatWindow, String nickName, String groupName, MessageMap onlineList,
                           MessageMap myMessage, ObjectOutputStream oos, ObjectInputStream ois, ChatClient client) {
         this.chatWindow = chatWindow;
         this.nickName = nickName;
+        this.groupName = groupName;
         this.onlineList = onlineList;
         this.myMessage = myMessage;
         this.oos = oos;
@@ -74,6 +76,9 @@ public class ChatController implements ActionListener {
             Thread.onSpinWait();
         }
         return this.nickName;
+    }
+    public String getGroupName(){
+        return this.groupName;
     }
 
 
@@ -142,11 +147,11 @@ public class ChatController implements ActionListener {
     private void updateHistory(){
         System.out.println("##########");
         System.out.println(senderName);
-        this.chatWindow.setSenderLabel(senderName);
         Stack<String> sendMessageList = new Stack<>();
         Stack<String> receiveMessageList = new Stack<>();
         System.out.println(onlineList.values().isEmpty());
         if(senderName != null) {
+            this.chatWindow.setSenderLabel(this.groupName + ": " + senderName);
             if (!onlineList.get(senderName).isEmpty()) {
                 for (String receiveMessage : onlineList.get(senderName))
                     receiveMessageList.push(receiveMessage);
@@ -174,6 +179,7 @@ public class ChatController implements ActionListener {
                         this.chatLogin.getWarning().setText("Name already exists");
                     } else {
                         this.nickName = inputName;
+                        this.groupName = groupNumber;
                         this.chatLogin.dispose();
                     }
                 }

@@ -15,7 +15,7 @@ public class ChatServer extends Thread{
     private static boolean stopRequested;
     // Avoid problems like deadlock, conflict or starvation
 
-    private static HashMap<String, MessageMap> onlineList = new HashMap<>();
+    private static HashMap<String, HashMap<String, MessageMap>> onlineList = new HashMap<>();
     /*
       use the Singleton to ensure the server could be at most one
       and just be used in package

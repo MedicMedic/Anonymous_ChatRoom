@@ -45,7 +45,9 @@ public class ChatClient extends Thread  {
 
 
                 // disposable instance
-                String nickName = new ChatController(new ChatLogin(), oos, ois).getNickName();
+                ChatController loginController = new ChatController(new ChatLogin(), oos, ois);
+                String nickName = loginController.getNickName();
+                String groupName = loginController.getGroupName();
 
 
                 // get the init inlineList
@@ -56,7 +58,7 @@ public class ChatClient extends Thread  {
                 }
                 // begin to chat
                 isStopped = false;
-                ChatController windowControl = new ChatController(new ChatWindow(nickName), nickName, onlineList, myMessage, oos, ois, this);
+                ChatController windowControl = new ChatController(new ChatWindow(nickName), nickName,groupName, onlineList, myMessage, oos, ois, this);
                 windowControl.autoUpdateList();
                 String response;
                 while(!isStopped) {

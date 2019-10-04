@@ -139,7 +139,7 @@ public class ChatWindow extends JFrame{
         this.setMinimumSize(new Dimension(830, 500));
         this.setTitle("Welcome " + nickName);
         this.setVisible(true);
-        this.setDefaultCloseOperation(new JFrame().EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(new JFrame().DO_NOTHING_ON_CLOSE);
 
     }
 

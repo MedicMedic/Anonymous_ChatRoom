@@ -14,8 +14,8 @@ public class ChatSeverSocket implements Runnable {
     private String nickName;
     private String groupNumber;
     private Socket socket;
-    private static HashMap<String, MessageMap> onlineList;
-//    private static HashMap<String, HashMap<String, MessageMap>> onlineList;
+//    private static HashMap<String, MessageMap> onlineList;
+    private static HashMap<String, HashMap<String, MessageMap>> onlineList;
 //    private
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
@@ -25,46 +25,56 @@ public class ChatSeverSocket implements Runnable {
 
 //    private boolean isStoped = false;
 
-    ChatSeverSocket(Socket socket, HashMap<String, MessageMap> onlineList) {
+    ChatSeverSocket(Socket socket, HashMap<String, HashMap<String, MessageMap>> onlineList) {
         this.socket = socket;
         ChatSeverSocket.onlineList = onlineList;
     }
+
     private void initilize(){
        try {
            do {
-               this.nickName = (String) ois.readObject();
+               this.nickName = (String)ois.readObject();
                this.groupNumber = (String)ois.readObject();
-               if (onlineList.isEmpty()) {
+//               String tempGroupName = (String)ois.readObject();
+//               if(tempGroupName == null){
+//                   tempGroupName = "";
+//               }
+               // if the group onlineList is empty
+               if (isNickNameEmpty(onlineList)) {
                    oos.writeObject("successful");
+                   if(!onlineList.containsKey(this.groupNumber))
+                       onlineList.put(this.groupNumber, new HashMap<String, MessageMap>());
                    break;
-               } else if (onlineList.containsKey(nickName)) {
+               } else if (isDuplicated(onlineList, nickName)) {
                    oos.writeObject("duplicated");
                } else {
                    oos.writeObject("successful");
+                   if(!onlineList.containsKey(this.groupNumber))
+                       onlineList.put(this.groupNumber, new HashMap<String, MessageMap>());
                    break;
                }
            } while (true);
             try{
                 write.lock();
                 // for existing user, add new user in their onlineList HashMap
-                for (String target : onlineList.keySet()) {
-                    onlineList.get(target).put(this.nickName, new Stack<String>());
+                for (String target : onlineList.get(this.groupNumber).keySet()) {
+                    onlineList.get(this.groupNumber).get(target).put(this.nickName, new Stack<String>());
 
                 }
 
                 // add new nick Name, allocate the space to onlineList
-                onlineList.put(this.nickName, new MessageMap());
+                onlineList.get(this.groupNumber).put(this.nickName, new MessageMap());
 
                 // add other user into new user's hashMap, except itself
-                for (String target : onlineList.keySet())
+                for (String target : onlineList.get(this.groupNumber).keySet())
                     if (!target.equals(this.nickName))
-                        onlineList.get(this.nickName).put(target, new Stack<String>());
+                        onlineList.get(this.groupNumber).get(this.nickName).put(target, new Stack<String>());
             }finally{
                 write.unlock();
             }
 
            // first load onlineList
-           oos.writeObject(onlineList.get(nickName));
+           oos.writeObject(onlineList.get(this.groupNumber).get(nickName));
 //           oos.writeObject("Welcome " + nickName);
        }catch(IOException | ClassNotFoundException e){
            System.err.println("Error occurs  " + e);
@@ -81,9 +91,9 @@ public class ChatSeverSocket implements Runnable {
            this.initilize();
 
            // TODO: test need to be deleted
-            for(String usr : onlineList.keySet()){
+            for(String usr : onlineList.get(this.groupNumber).keySet()){
                 System.out.println(usr);
-                for(String sender :onlineList.get(usr).keySet()){
+                for(String sender :onlineList.get(this.groupNumber).get(usr).keySet()){
                     System.out.println("   +" + sender);
                 }
             }
@@ -107,9 +117,14 @@ public class ChatSeverSocket implements Runnable {
                     oos.writeObject("Client terminating, closing socket");
                     try {
                         write.lock();
-                        onlineList.remove(nickName);
-                        for (HashMap map : onlineList.values())
+                        onlineList.get(this.groupNumber).remove(nickName);
+                        for (HashMap map : onlineList.get(this.groupNumber).values()) {
                             map.remove(nickName);
+                        }
+                        // if group is empty
+                        if(onlineList.get(this.groupNumber).keySet().isEmpty()){
+                            onlineList.remove(this.groupNumber);
+                        }
                         break;
                     }finally {
                         write.unlock();
@@ -118,10 +133,12 @@ public class ChatSeverSocket implements Runnable {
                     try{
                         read.lock();
                         MessageMap temp = new MessageMap();
-                        for(String sender : onlineList.get(this.nickName).keySet()){
+                        System.out.println("###########"+this.groupNumber);
+                        System.out.println("@@@@@@@@" + this.nickName);
+                        for(String sender : onlineList.get(this.groupNumber).get(this.nickName).keySet()){
                             temp.put(sender, new Stack<String>());
-                                while(!onlineList.get(this.nickName).get(sender).isEmpty())
-                                    temp.get(sender).push(onlineList.get(this.nickName).get(sender).pop());
+                                while(!onlineList.get(this.groupNumber).get(this.nickName).get(sender).isEmpty())
+                                    temp.get(sender).push(onlineList.get(this.groupNumber).get(this.nickName).get(sender).pop());
                         }
 
 //                        System.out.println("In " +nickName+ " :");
@@ -146,7 +163,7 @@ public class ChatSeverSocket implements Runnable {
                     //Todo: write Lock
                     try {
                         write.lock();
-                        onlineList.get(target).get(this.nickName).push(message);
+                        onlineList.get(this.groupNumber).get(target).get(this.nickName).push(message);
                         oos.writeObject("Your message is received");
                     }finally{
                         write.unlock();
@@ -177,5 +194,23 @@ public class ChatSeverSocket implements Runnable {
         }
 
 
+    }
+    private boolean isNickNameEmpty(HashMap<String, HashMap<String, MessageMap>> onlineList){
+        for(HashMap<String, MessageMap> groupList : onlineList.values()){
+            if(!groupList.isEmpty()){
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean isDuplicated(HashMap<String, HashMap<String, MessageMap>> onlineList, String nickName){
+        for(HashMap<String, MessageMap> groupList : onlineList.values()){
+            for(String duplicatedNickName : groupList.keySet()){
+                if(duplicatedNickName.equals(nickName)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
