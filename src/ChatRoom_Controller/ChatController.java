@@ -1,11 +1,13 @@
 package ChatRoom_Controller;
 
+import chatRoom_Executive.ChatClient;
 import chatRoom_Model.MessageMap;
 import chatRoom_Model.MessagePane;
 import chatRoom_View.ChatLogin;
 import chatRoom_View.ChatWindow;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -25,16 +27,15 @@ public class ChatController implements ActionListener {
     private MessageMap onlineList;
     private MessageMap myMessage;
 
-    private boolean isStopped;
     private ObjectOutputStream oos;
     private ObjectInputStream ois;
+    private ChatClient client;
 
     private ArrayList<MessagePane> messagePaneList;
     private String senderName;
     private Timer autoUpdate;
 
-    Stack<String> sendMessageList;
-    Stack<String> receiveMessageList;
+
     // constructors
 
     // constructor for ChatLogin
@@ -48,14 +49,14 @@ public class ChatController implements ActionListener {
 
     // constructor for ChatWindow
     public ChatController(ChatWindow chatWindow, String nickName, MessageMap onlineList,
-                          MessageMap myMessage, boolean isStopped, ObjectOutputStream oos, ObjectInputStream ois) {
+                          MessageMap myMessage, ObjectOutputStream oos, ObjectInputStream ois, ChatClient client) {
         this.chatWindow = chatWindow;
         this.nickName = nickName;
         this.onlineList = onlineList;
         this.myMessage = myMessage;
-        this.isStopped = isStopped;
         this.oos = oos;
         this.ois = ois;
+        this.client = client;
 
         this.autoUpdate = new Timer();
 
@@ -141,8 +142,9 @@ public class ChatController implements ActionListener {
     private void updateHistory(){
         System.out.println("##########");
         System.out.println(senderName);
-        sendMessageList = new Stack<>();
-        receiveMessageList = new Stack<>();
+        this.chatWindow.setSenderLabel(senderName);
+        Stack<String> sendMessageList = new Stack<>();
+        Stack<String> receiveMessageList = new Stack<>();
         System.out.println(onlineList.values().isEmpty());
         if(senderName != null) {
             if (!onlineList.get(senderName).isEmpty()) {
@@ -161,10 +163,12 @@ public class ChatController implements ActionListener {
         if (this.chatLogin != null) {
             try {
                 String inputName = this.chatLogin.getInputNickName().getText();
+                String groupNumber = this.chatLogin.getGroup().getText();
                 if (inputName.equals("")) {
                     this.chatLogin.getWarning().setText("Nickname should not be null");
                 } else {
                     oos.writeObject(inputName);
+                    oos.writeObject(groupNumber);
                     this.ifLogin = (String) ois.readObject();
                     if (ifLogin.equals("duplicated")) {
                         this.chatLogin.getWarning().setText("Name already exists");
@@ -194,14 +198,18 @@ public class ChatController implements ActionListener {
             try {
                 oos.writeObject("terminate");
                 System.out.println((String) ois.readObject());
-                this.isStopped = true;
+                this.oos.close();
+                this.ois.close();
+                this.chatWindow.dispose();
                 this.autoUpdate.cancel();
+                this.client.isStopped = true;
             } catch (IOException | ClassNotFoundException ex) {
                 System.err.println("Exception occurs: " + ex);
             }
         } else{ // buttonList
             JButton userButton = (JButton)e.getSource();
-            this.chatWindow.clearHisotry();
+            this.chatWindow.getsendButton().setEnabled(true);
+//            this.chatWindow.clearHisotry();
             for(MessagePane messagePane : messagePaneList){
                 // find the sender from onlineList
                 if(messagePane.getMessageButton().getText().equals(userButton.getText())){

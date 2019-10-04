@@ -27,6 +27,7 @@ public class ChatWindow extends JFrame{
     private JPanel send;
     private JPanel receive;
 
+    private JLabel senderLabel;
     private JTextArea textArea;
 
     public ChatWindow(String nickName){
@@ -80,8 +81,15 @@ public class ChatWindow extends JFrame{
         JPanel tempHis = new JPanel();tempHis.setPreferredSize(new Dimension(500, 740));tempHis.setBackground(nord[0]);
         tempHis.setLayout(new BorderLayout());
         tempHis.add(history, BorderLayout.CENTER);
-        JPanel text = new JPanel();text.setPreferredSize(new Dimension(500, 120));text.setBackground(nord[2]);
+        JPanel text = new JPanel();text.setPreferredSize(new Dimension(500, 100));text.setBackground(nord[2]);
         chat.setLayout(new BorderLayout());
+        JPanel senderPanel = new JPanel();senderPanel.setPreferredSize(new Dimension(0, 60));senderPanel.setBackground(nord[0]);
+        senderPanel.setBorder(BorderFactory.createLineBorder(nord[1]));
+        senderPanel.setLayout(new GridLayout(1,1));
+        senderLabel = new JLabel();senderPanel.setBackground(nord[0]);
+        senderPanel.add(senderLabel);
+
+        chat.add(senderPanel, BorderLayout.NORTH);
         chat.add(tempHis, BorderLayout.CENTER);
         chat.add(text, BorderLayout.SOUTH);
 
@@ -121,6 +129,7 @@ public class ChatWindow extends JFrame{
         sendButton.setBackground(nord[3]);
         sendButton.setOpaque(true);
         sendButton.setBorderPainted(false);
+        sendButton.setEnabled(false);
         sendPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
         sendPanel.add(sendButton);
 
@@ -147,13 +156,18 @@ public class ChatWindow extends JFrame{
     public void setTextArea(){
         this.textArea.setText("");
     }
-
-    public void clearHisotry(){
-        this.send.removeAll();
-        this.receive.removeAll();
-        this.send.revalidate();
-        this.receive.revalidate();
+    public void setSenderLabel(String senderName){
+        senderLabel.setText(senderName);
+        senderLabel.setHorizontalAlignment(JTextField.CENTER);
+        senderLabel.setForeground(nord[3]);
     }
+
+//    public void clearHisotry(){
+//        this.send.removeAll();
+//        this.receive.removeAll();
+//        this.send.revalidate();
+//        this.receive.revalidate();
+//    }
     public void showHistory(Stack<String>sendMessageList, Stack<String>receiveMessageList){
         this.send.removeAll();
         this.receive.removeAll();

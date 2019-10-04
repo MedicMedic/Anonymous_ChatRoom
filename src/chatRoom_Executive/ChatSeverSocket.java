@@ -12,10 +12,11 @@ public class ChatSeverSocket implements Runnable {
 
     // instance field
     private String nickName;
+    private String groupNumber;
     private Socket socket;
     private static HashMap<String, MessageMap> onlineList;
-    private static HashMap<String, HashMap<String, MessageMap>> on
-
+//    private static HashMap<String, HashMap<String, MessageMap>> onlineList;
+//    private
     private ObjectInputStream ois;
     private ObjectOutputStream oos;
     private static ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
@@ -32,6 +33,7 @@ public class ChatSeverSocket implements Runnable {
        try {
            do {
                this.nickName = (String) ois.readObject();
+               this.groupNumber = (String)ois.readObject();
                if (onlineList.isEmpty()) {
                    oos.writeObject("successful");
                    break;

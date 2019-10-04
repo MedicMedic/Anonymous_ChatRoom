@@ -12,7 +12,7 @@ public class test {
 //        test.push("asdfkjas");
 //        for(String ad:test)
 //            System.out.println(ad);
-//        new ChatClient().start();
+        new ChatClient().start();
 
 ////        String test = "233";
 //        HashMap<String, String> test = new HashMap<>();

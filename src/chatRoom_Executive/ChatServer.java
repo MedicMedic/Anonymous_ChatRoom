@@ -6,11 +6,11 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class ChatServer {
+public class ChatServer extends Thread{
     // instance field
     // Constant
     private static final int PORT = 7777;
-
+    private static final int MAX_BYTES = 2048;
 
     private static boolean stopRequested;
     // Avoid problems like deadlock, conflict or starvation
@@ -23,7 +23,6 @@ public class ChatServer {
 
     // constructor
     private ChatServer() {
-        stopRequested = false;
     }
 
     private static class SingletonBuilder {
@@ -34,13 +33,25 @@ public class ChatServer {
         return SingletonBuilder.chatServer;
     }
 
+    public void run() {
+        startServer();
+    }
+
     // start the chatServer
     private static void startServer() {
         stopRequested = false;
         ServerSocket serverSocket = null;
+
+
         try {
             serverSocket = new ServerSocket(PORT);
             System.out.println("Server started at " + InetAddress.getLocalHost() + " on port " + PORT);
+
+            // udp socket create
+            DatagramSocket udpSocket = new DatagramSocket(PORT, InetAddress.getLocalHost());
+            byte[] receiveBytes = new byte[MAX_BYTES];
+            // create MessageReceive packet object
+            DatagramPacket receivePacket = new DatagramPacket(receiveBytes, receiveBytes.length);
         } catch (IOException e) {
             System.err.println("server can't listen on port: " + e);
             System.exit(-1);
@@ -67,6 +78,6 @@ public class ChatServer {
 
 
     public static void main(String[] args) {
-        ChatServer.startServer();
+        new ChatServer().start();
     }
 }

@@ -7,7 +7,7 @@ import java.awt.*;
 import java.util.concurrent.Flow;
 
 public class TestWindow extends JFrame {
-    TestWindow(){
+    private TestWindow(){
         this.setLayout(new BorderLayout());
         JPanel a = new JPanel();a.setPreferredSize(new Dimension(330,0));a.setBackground(Color.black);
         JPanel a1 = new JPanel();a1.setPreferredSize(new Dimension(70,0));a.setBackground(Color.black);

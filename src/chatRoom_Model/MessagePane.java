@@ -9,7 +9,7 @@ import java.awt.*;
 public class MessagePane extends JPanel {
     private JButton messageButton;
     private String userName;
-    Color[] nord;
+    private Color[] nord;
     {
         nord = new Color[4];
         nord[0] = new Color(48, 55, 87);
